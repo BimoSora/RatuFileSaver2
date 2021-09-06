@@ -1,7 +1,23 @@
 require('dotenv').config()
 const { Telegraf } = require('telegraf')
+const rateLimit = require('telegraf-ratelimit')
+const crypto = require('crypto')
 const config = require('./config.js')
+const limitConfig = {
+    window: 60000,
+    limit: 20,
+    onLimitExceeded: (ctx, next) => ctx.reply('Silakan menunggu 1 menit untuk mengirim lagi, minimal 20 pesan sekali kirim')
+}
+const mediaLimitConfig = {
+    window: 60000,
+    limit: 20,
+    keyGenerator: function (ctx) {
+        return ctx.from.id
+    },
+    onLimitExceeded: (ctx, next) => ctx.reply('Silakan menunggu 1 menit untuk mengirim lagi, minimal 20 pesan sekali kirim')
+}
 const bot = new Telegraf(config.TOKEN)
+bot.use(rateLimit(limitConfig))
 
 process.env.TZ = "Asia/Jakarta";
 
@@ -1074,7 +1090,7 @@ bot.command('unbanchat', (ctx) => {
 })
 
 //saving documents to db and generating link
-bot.on('document', async (ctx) => {
+bot.on('document', rateLimit(mediaLimitConfig), async (ctx) => {
     if(ctx.chat.type == 'private') {
         document = ctx.message.document
 
@@ -1406,7 +1422,7 @@ bot.on('document', async (ctx) => {
 })
 
 //video files
-bot.on('video', async(ctx) => {
+bot.on('video', rateLimit(mediaLimitConfig), async(ctx) => {
     if(ctx.chat.type == 'private') {
         video = ctx.message.video
 
@@ -1738,7 +1754,7 @@ bot.on('video', async(ctx) => {
 })
 
 //photo files
-bot.on('photo', async(ctx) => {
+bot.on('photo', rateLimit(mediaLimitConfig), async(ctx) => {
     if(ctx.chat.type == 'private') {
         photo = ctx.message.photo
         
