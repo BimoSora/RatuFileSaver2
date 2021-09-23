@@ -218,38 +218,56 @@ bot.start(async(ctx)=>{
                 //console.log(member);
                 if(member.status == 'restricted' || member.status == 'left' || member.status == 'kicked'){
                     const profile2 = await bot.telegram.getUserProfilePhotos(ctx.from.id)
-                    if(!profile2 || profile2.total_count == 0)
-                        return ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
-                            parse_mode:'HTML',
-                            disable_web_page_preview: true,
-                            reply_markup:{
-                                inline_keyboard:inKey2
+                    await saver.checkBan(`${ctx.from.id}`).then((res) => {
+                        //console.log(res);
+                        if(res == true) {
+                            if(ctx.chat.type == 'private') {
+                                ctx.reply(`${messagebanned(ctx)}`)
                             }
-                        })
-                        ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
-                            parse_mode:'HTML',
-                            disable_web_page_preview: true,
-                            reply_markup:{
-                                inline_keyboard:inKey2
-                            }
-                        })
+                        }else{
+                            if(!profile2 || profile2.total_count == 0)
+                                return ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
+                                    parse_mode:'HTML',
+                                    disable_web_page_preview: true,
+                                    reply_markup:{
+                                        inline_keyboard:inKey2
+                                    }
+                                })
+                                ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
+                                    parse_mode:'HTML',
+                                    disable_web_page_preview: true,
+                                    reply_markup:{
+                                        inline_keyboard:inKey2
+                                    }
+                                })
+                        }
+                    })
                 }else{
                     //welcoming message on /start and ifthere is a query available we can send files
                     if(length == 1){
                         const profile3 = await bot.telegram.getUserProfilePhotos(ctx.from.id)
-                        if(!profile3 || profile3.total_count == 0)
-                            return ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,{
-                                parse_mode:'HTML',
-                                disable_web_page_preview: true,
-                                reply_markup:{
-                                    inline_keyboard:inKey
-                                }
-                            })
-                            ctx.replyWithPhoto(profile3.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,
-                                parse_mode:'HTML',
-                                disable_web_page_preview: true,
-                                reply_markup:{
-                                    inline_keyboard:inKey
+                            await saver.checkBan(`${ctx.from.id}`).then((res) => {
+                                //console.log(res);
+                                if(res == true) {
+                                    if(ctx.chat.type == 'private') {
+                                        ctx.reply(`${messagebanned(ctx)}`)
+                                    }
+                                }else{
+                                    if(!profile3 || profile3.total_count == 0)
+                                        return ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,{
+                                            parse_mode:'HTML',
+                                            disable_web_page_preview: true,
+                                            reply_markup:{
+                                                inline_keyboard:inKey
+                                            }
+                                        })
+                                        ctx.replyWithPhoto(profile3.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,
+                                            parse_mode:'HTML',
+                                            disable_web_page_preview: true,
+                                            reply_markup:{
+                                                inline_keyboard:inKey
+                                            }
+                                        })
                                 }
                             })
                         }else{
@@ -407,16 +425,25 @@ bot.action('STARTUP',async(ctx)=>{
 })
 
 //TEST BOT
-bot.hears('ping',(ctx)=>{
+bot.hears('ping',async(ctx)=>{
     if(ctx.chat.type == 'private') {
-        let chatId = ctx.message.from.id;
-        let opts = {
-            reply_to_message_id: ctx.message.message_id,
-            reply_markup:{
-                inline_keyboard: [[{text:'OK',callback_data:'PONG'}]]
+        await saver.checkBan(`${ctx.from.id}`).then((res) => {
+            //console.log(res);
+            if(res == true) {
+                if(ctx.chat.type == 'private') {
+                    ctx.reply(`${messagebanned(ctx)}`)
+                }
+            }else{
+                let chatId = ctx.message.from.id;
+                let opts = {
+                    reply_to_message_id: ctx.message.message_id,
+                    reply_markup:{
+                        inline_keyboard: [[{text:'OK',callback_data:'PONG'}]]
+                    }
+                }
+                return bot.telegram.sendMessage(chatId, 'pong' , opts);
             }
-        }
-        return bot.telegram.sendMessage(chatId, 'pong' , opts);
+        })
     }
 })
 
@@ -884,15 +911,24 @@ bot.command('getid',async(ctx)=>{
   
     if(ctx.chat.type == 'private') {
         const profile4 = await bot.telegram.getUserProfilePhotos(ctx.from.id)
-        if(!profile4 || profile4.total_count == 0){
-            ctx.reply(`<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n<b>Username:</b> ${username(ctx)}\n<b>ID:</b> ${ctx.from.id}`,{
-                parse_mode:'HTML'  
-            })
-        }else{
-            ctx.replyWithPhoto(profile4.photos[0][0].file_id,{caption: `<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n<b>Username:</b> ${username(ctx)}\n<b>ID:</b> ${ctx.from.id}`,
-                parse_mode:'HTML'
-            })
-        }
+        await saver.checkBan(`${ctx.from.id}`).then((res) => {
+            //console.log(res);
+            if(res == true) {
+                if(ctx.chat.type == 'private') {
+                    ctx.reply(`${messagebanned(ctx)}`)
+                }
+            }else{
+                if(!profile4 || profile4.total_count == 0){
+                    ctx.reply(`<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n<b>Username:</b> ${username(ctx)}\n<b>ID:</b> ${ctx.from.id}`,{
+                        parse_mode:'HTML'  
+                    })
+                }else{
+                    ctx.replyWithPhoto(profile4.photos[0][0].file_id,{caption: `<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n<b>Username:</b> ${username(ctx)}\n<b>ID:</b> ${ctx.from.id}`,
+                        parse_mode:'HTML'
+                    })
+                }
+            }
+        })
     }
 })
 
