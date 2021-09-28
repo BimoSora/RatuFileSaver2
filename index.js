@@ -425,7 +425,7 @@ bot.action('STARTUP',async(ctx)=>{
 })
 
 //TEST BOT
-bot.hears('ping',async(ctx)=>{
+bot.hears(/ping/i,async(ctx)=>{
     if(ctx.chat.type == 'private') {
         await saver.checkBan(`${ctx.from.id}`).then((res) => {
             //console.log(res);
