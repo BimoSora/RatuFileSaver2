@@ -8,7 +8,7 @@ const limitConfig = {
     limit: 20,
     onLimitExceeded: (ctx, next) => {
         if(ctx.chat.type == 'private') {
-            ctx.reply('Silakan menunggu 3 detik untuk mengirim, minimal 20 pesan sekali kirim')
+            ctx.reply('Silakan menunggu 3 detik untuk mengirim, maksimal 20 pesan sekali kirim')
         }
     }
 }
@@ -20,7 +20,7 @@ const mediaLimitConfig = {
     },
     onLimitExceeded: (ctx, next) => {
         if(ctx.chat.type == 'private') {
-            ctx.reply('Silakan menunggu 1 menit untuk mengirim, minimal 20 pesan sekali kirim')
+            ctx.reply('Silakan menunggu 1 menit untuk mengirim, maksimal 20 pesan sekali kirim')
         }
     }
 }
