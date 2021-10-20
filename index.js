@@ -3,15 +3,15 @@ const { Telegraf } = require('telegraf')
 const rateLimit = require('telegraf-ratelimit')
 const crypto = require('crypto')
 const config = require('./config.js')
-const limitConfig = {
-    window: 3000,
-    limit: 20,
-    onLimitExceeded: (ctx, next) => {
-        if(ctx.chat.type == 'private') {
-            ctx.reply('Silakan menunggu 3 detik untuk mengirim, maksimal 20 pesan sekali kirim')
-        }
-    }
-}
+//const limitConfig = {
+//    window: 3000,
+//    limit: 20,
+//    onLimitExceeded: (ctx, next) => {
+//        if(ctx.chat.type == 'private') {
+//            ctx.reply('Silakan menunggu 3 detik untuk mengirim, maksimal 20 pesan sekali kirim')
+//        }
+//    }
+//}
 const mediaLimitConfig = {
     window: 60000,
     limit: 20,
