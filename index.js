@@ -25,7 +25,7 @@ const mediaLimitConfig = {
     }
 }
 const bot = new Telegraf(config.TOKEN)
-bot.use(rateLimit(limitConfig))
+//bot.use(rateLimit(limitConfig))
 
 process.env.TZ = "Asia/Jakarta";
 
