@@ -12,15 +12,12 @@ const limitConfig = {
         }
     }
 }
-const mediaLimitConfig = {
-    window: 60000,
+const limitConfig = {
+    window: 3000,
     limit: 20,
-    keyGenerator: function (ctx) {
-      return ctx.from.id
-    },
     onLimitExceeded: (ctx, next) => {
         if(ctx.chat.type == 'private') {
-            ctx.reply('Silakan menunggu 1 menit untuk mengirim')
+            ctx.reply('Silakan menunggu 3 detik untuk mengirim.')
         }
     }
 }
@@ -32,7 +29,7 @@ const mediaLimitConfig = {
     },
     onLimitExceeded: (ctx, next) => {
         if(ctx.chat.type == 'private') {
-            ctx.reply('Silakan menunggu 1 menit untuk mengirim, maksimal 20 pesan sekali kirim')
+            ctx.reply('Silakan menunggu 1 menit untuk mengirim.')
         }
     }
 }
