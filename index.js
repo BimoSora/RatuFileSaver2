@@ -8,15 +8,6 @@ const limitConfig = {
     limit: 20,
     onLimitExceeded: (ctx, next) => {
         if(ctx.chat.type == 'private') {
-            ctx.reply('Silakan menunggu 3 detik untuk mengirim')
-        }
-    }
-}
-const limitConfig = {
-    window: 3000,
-    limit: 20,
-    onLimitExceeded: (ctx, next) => {
-        if(ctx.chat.type == 'private') {
             ctx.reply('Silakan menunggu 3 detik untuk mengirim.')
         }
     }
