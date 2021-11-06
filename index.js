@@ -1,31 +1,8 @@
 require('dotenv').config()
 const { Telegraf } = require('telegraf')
-const rateLimit = require('telegraf-ratelimit')
 const crypto = require('crypto')
 const config = require('./config.js')
-const limitConfig = {
-    window: 3000,
-    limit: 20,
-    onLimitExceeded: (ctx, next) => {
-        if(ctx.chat.type == 'private') {
-            ctx.reply('Silakan menunggu 3 detik untuk mengirim.')
-        }
-    }
-}
-const mediaLimitConfig = {
-    window: 60000,
-    limit: 20,
-    keyGenerator: function (ctx) {
-      return ctx.from.id
-    },
-    onLimitExceeded: (ctx, next) => {
-        if(ctx.chat.type == 'private') {
-            ctx.reply('Silakan menunggu 1 menit untuk mengirim.')
-        }
-    }
-}
 const bot = new Telegraf(config.TOKEN)
-bot.use(rateLimit(limitConfig))
 
 process.env.TZ = "Asia/Jakarta";
 
