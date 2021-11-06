@@ -278,6 +278,9 @@ Anda dapat menghapus file 4 cara.</br>
 
 //Update
 
+HISTORY 9
+1. Perbaikan kirim media tanpa limit.
+
 HISTORY 8
 1. Perbaikan penulisan URL gabung grup/channel tinggal tulis name-https://t.me/test
 
