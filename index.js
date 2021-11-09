@@ -133,7 +133,7 @@ bot.start(async(ctx)=>{
                     })
             }else{
                 if (query.indexOf('grp_') > -1){
-                    var query1 = query.replace('grp_','');
+                    let query1 = query.replace('grp_','');
                     try{
                         file = await saver.getFile1(query1).then((res1)=>{
                             //console.log(res1);
