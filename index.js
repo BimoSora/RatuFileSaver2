@@ -135,55 +135,64 @@ bot.start(async(ctx)=>{
                 if (query.indexOf('grp_') > -1){
                     let query1 = query.replace('grp_','');
                     try{
-                        file = await saver.getFile1(query1).then((res1)=>{
-                            //console.log(res1);
+                        const res1 = await saver.getFile1(query1)
                             let mediagroup = [];
                             for (let index = 0; index < res1.length; index++) {
-                                const data = res1[index];
-                                mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
-                            }
-                            //console.log(mediagroup);
-                            function captionFunction() {
-                                ctx.reply(`${captionbuild(ctx)}`,{
-                                    parse_mode:'HTML'
-                                })
-                            }
-                            return ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup) + setTimeout(captionFunction, 1000)
-                        })
+                            const data = res1[index];
+                            mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
+                        }
+                    
+                        function captionFunction() {
+                            return ctx.reply(`${captionbuild(ctx)}`,{
+                                parse_mode:'HTML'
+                            })
+                        }
+                        await ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup);
+                        setTimeout(captionFunction, 1000)
                     }catch(error){
+                        console.error(error)
                         ctx.reply(`Media tidak ditemukan atau sudah dihapus`)
                     }
                 }else{
                     let query2 = query;
                     try{
-                        file2 = await saver.getFile2(query2).then((res2)=>{
-                            //console.log(res2);
-                            function captionFunction2() {
-                                ctx.reply(`${captionbuild(ctx)}`,{
-                                    parse_mode:'HTML'
-                                })
+                        const res2 = await saver.getFile2(query2)
+                    
+                        function captionFunction2() {
+                            ctx.reply(`${captionbuild(ctx)}`,{
+                                parse_mode:'HTML'
+                            })
+                        }
+                        if(res2.type=='video'){
+                            if(!res2.caption) {
+                                setTimeout(captionFunction2, 1000)
+                                return ctx.replyWithVideo(res2.file_id);
                             }
-                            if(res2.type=='video'){
-                                if(!res2.caption)
-                                    return ctx.replyWithVideo(res2.file_id) + setTimeout(captionFunction2, 1000)
-                                    ctx.replyWithVideo(res2.file_id,{caption: `${res2.caption}`,
-                                        parse_mode:'HTML'
-                                    }) + setTimeout(captionFunction2, 1000)
-                            }else if(res2.type=='photo'){
-                                if(!res2.caption)
-                                    return ctx.replyWithPhoto(res2.file_id) + setTimeout(captionFunction2, 1000)
-                                    ctx.replyWithPhoto(res2.file_id,{caption: `${res2.caption}`,
-                                        parse_mode:'HTML'
-                                    }) + setTimeout(captionFunction2, 1000)
-                            }else if(res2.type=='document'){
-                                if(!res2.caption)
-                                    return ctx.replyWithDocument(res2.file_id) + setTimeout(captionFunction2, 1000)
-                                    ctx.replyWithDocument(res2.file_id,{caption: `${res2.caption}`,
-                                        parse_mode:'HTML'
-                                    }) + setTimeout(captionFunction2, 1000)
+                            ctx.replyWithVideo(res2.file_id,{caption: `${res2.caption}`,
+                                parse_mode:'HTML'
+                            });
+                                setTimeout(captionFunction2, 1000)
+                        }else if(res2.type=='photo'){
+                            if(!res2.caption) {
+                                setTimeout(captionFunction2, 1000)
+                                return ctx.replyWithPhoto(res2.file_id);
                             }
-                        })
+                            ctx.replyWithPhoto(res2.file_id,{caption: `${res2.caption}`,
+                                parse_mode:'HTML'
+                            });
+                                setTimeout(captionFunction2, 1000)
+                        }else if(res2.type=='document'){
+                            if(!res2.caption) {
+                                setTimeout(captionFunction2, 1000)
+                                return ctx.replyWithDocument(res2.file_id);
+                            }
+                            ctx.replyWithDocument(res2.file_id,{caption: `${res2.caption}`,
+                                parse_mode:'HTML'
+                            })
+                                setTimeout(captionFunction2, 1000)
+                        }
                     }catch(error){
+                        console.error(error)
                         ctx.reply(`Media tidak ditemukan atau sudah dihapus`)
                     }
                 }
@@ -249,57 +258,66 @@ bot.start(async(ctx)=>{
                             })
                         }else{
                             if (query.indexOf('grp_') > -1){
-                                var query1 = query.replace('grp_','');
+                                let query1 = query.replace('grp_','');
                                 try{
-                                    file = await saver.getFile1(query1).then((res1)=>{
-                                        //console.log(res1);
+                                    const res1 = await saver.getFile1(query1)
                                         let mediagroup = [];
                                         for (let index = 0; index < res1.length; index++) {
-                                            const data = res1[index];
-                                            mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
-                                        }
-                                        //console.log(mediagroup);
-                                        function captionFunction() {
-                                            ctx.reply(`${captionbuild(ctx)}`,{
-                                                parse_mode:'HTML'
-                                            })
-                                        }
-                                        return ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup) + setTimeout(captionFunction, 1000)
-                                    })
+                                        const data = res1[index];
+                                        mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
+                                    }
+                                
+                                    function captionFunction() {
+                                        return ctx.reply(`${captionbuild(ctx)}`,{
+                                            parse_mode:'HTML'
+                                        })
+                                    }
+                                    await ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup);
+                                    setTimeout(captionFunction, 1000)
                                 }catch(error){
+                                    console.error(error)
                                     ctx.reply(`Media tidak ditemukan atau sudah dihapus`)
                                 }
                             }else{
                                 let query2 = query;
                                 try{
-                                    file2 = await saver.getFile2(query2).then((res2)=>{
-                                        //console.log(res2);
-                                        function captionFunction2() {
-                                            ctx.reply(`${captionbuild(ctx)}`,{
-                                                parse_mode:'HTML'
-                                            })
+                                    const res2 = await saver.getFile2(query2)
+                                
+                                    function captionFunction2() {
+                                        ctx.reply(`${captionbuild(ctx)}`,{
+                                            parse_mode:'HTML'
+                                        })
+                                    }
+                                    if(res2.type=='video'){
+                                        if(!res2.caption) {
+                                            setTimeout(captionFunction2, 1000)
+                                            return ctx.replyWithVideo(res2.file_id);
                                         }
-                                        if(res2.type=='video'){
-                                            if(!res2.caption)
-                                                return ctx.replyWithVideo(res2.file_id) + setTimeout(captionFunction2, 1000)
-                                                ctx.replyWithVideo(res2.file_id,{caption: `${res2.caption}`,
-                                                    parse_mode:'HTML'
-                                                }) + setTimeout(captionFunction2, 1000)
-                                        }else if(res2.type=='photo'){
-                                            if(!res2.caption)
-                                                return ctx.replyWithPhoto(res2.file_id) + setTimeout(captionFunction2, 1000)
-                                                ctx.replyWithPhoto(res2.file_id,{caption: `${res2.caption}`,
-                                                    parse_mode:'HTML'
-                                                }) + setTimeout(captionFunction2, 1000)
-                                        }else if(res2.type=='document'){
-                                            if(!res2.caption)
-                                                return ctx.replyWithDocument(res2.file_id) + setTimeout(captionFunction2, 1000)
-                                                ctx.replyWithDocument(res2.file_id,{caption: `${res2.caption}`,
-                                                    parse_mode:'HTML'
-                                                }) + setTimeout(captionFunction2, 1000)
+                                        ctx.replyWithVideo(res2.file_id,{caption: `${res2.caption}`,
+                                            parse_mode:'HTML'
+                                        });
+                                            setTimeout(captionFunction2, 1000)
+                                    }else if(res2.type=='photo'){
+                                        if(!res2.caption) {
+                                            setTimeout(captionFunction2, 1000)
+                                            return ctx.replyWithPhoto(res2.file_id);
                                         }
-                                    })
+                                        ctx.replyWithPhoto(res2.file_id,{caption: `${res2.caption}`,
+                                            parse_mode:'HTML'
+                                        });
+                                            setTimeout(captionFunction2, 1000)
+                                    }else if(res2.type=='document'){
+                                        if(!res2.caption) {
+                                            setTimeout(captionFunction2, 1000)
+                                            return ctx.replyWithDocument(res2.file_id);
+                                        }
+                                        ctx.replyWithDocument(res2.file_id,{caption: `${res2.caption}`,
+                                            parse_mode:'HTML'
+                                        })
+                                            setTimeout(captionFunction2, 1000)
+                                    }
                                 }catch(error){
+                                    console.error(error)
                                     ctx.reply(`Media tidak ditemukan atau sudah dihapus`)
                                 }
                             }
