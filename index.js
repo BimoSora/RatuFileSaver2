@@ -1198,7 +1198,9 @@ bot.on('document', async(ctx, next) => {
                     await saver.checkFile(`${document.file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails1)
                             ctx.reply(`✔️ Document disimpan \n<b>Nama file:</b> ${fileDetails1.file_name}\n<b>Size:</b> ${document.file_size} B\n<b>ID file:</b> ${document.file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id}`,{
@@ -1225,7 +1227,9 @@ bot.on('document', async(ctx, next) => {
                     await saver.checkFile(`${document.file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails2)
                             ctx.reply(`✔️ Document disimpan \n<b>Nama file:</b> ${fileDetails2.file_name}\n<b>Size:</b> ${document.file_size} B\n<b>ID file:</b> ${document.file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id}`,{
@@ -1254,7 +1258,9 @@ bot.on('document', async(ctx, next) => {
                     await saver.checkFile(`${document.file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails3)
                             ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails3.file_name}\n<b>Size:</b> ${document.file_size} B\n<b>ID file:</b> ${document.file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -1281,7 +1287,9 @@ bot.on('document', async(ctx, next) => {
                     await saver.checkFile(`${document.file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails4)
                             ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails4.file_name}\n<b>Size:</b> ${document.file_size} B\n<b>ID file:</b> ${document.file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -1403,7 +1411,9 @@ bot.on('document', async(ctx, next) => {
                             await saver.checkFile(`${document.file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails1)
                                     ctx.reply(`✔️ Document disimpan \n<b>Nama file:</b> ${fileDetails1.file_name}\n<b>Size:</b> ${document.file_size} B\n<b>ID file:</b> ${document.file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id}`,{
@@ -1430,7 +1440,9 @@ bot.on('document', async(ctx, next) => {
                             await saver.checkFile(`${document.file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails2)
                                     ctx.reply(`✔️ Document disimpan \n<b>Nama file:</b> ${fileDetails2.file_name}\n<b>Size:</b> ${document.file_size} B\n<b>ID file:</b> ${document.file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id}`,{
@@ -1459,7 +1471,9 @@ bot.on('document', async(ctx, next) => {
                             await saver.checkFile(`${document.file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails3)
                                     ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails3.file_name}\n<b>Size:</b> ${document.file_size} B\n<b>ID file:</b> ${document.file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -1486,7 +1500,9 @@ bot.on('document', async(ctx, next) => {
                             await saver.checkFile(`${document.file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails4)
                                     ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails4.file_name}\n<b>Size:</b> ${document.file_size} B\n<b>ID file:</b> ${document.file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -1593,7 +1609,9 @@ bot.on('video', async(ctx, next) => {
                     await saver.checkFile(`${video.file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails1)
                             ctx.reply(`✔️ Video disimpan \n<b>Nama file:</b> ${fileDetails1.file_name}\n<b>Size:</b> ${video.file_size} B\n<b>ID file:</b> ${video.file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id}`,{
@@ -1620,7 +1638,9 @@ bot.on('video', async(ctx, next) => {
                     await saver.checkFile(`${video.file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails2)
                             ctx.reply(`✔️ Video disimpan \n<b>Nama file:</b> ${fileDetails2.file_name}\n<b>Size:</b> ${video.file_size} B\n<b>ID file:</b> ${video.file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id}`,{
@@ -1649,7 +1669,9 @@ bot.on('video', async(ctx, next) => {
                     await saver.checkFile(`${video.file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails3)
                             ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails3.file_name}\n<b>Size:</b> ${video.file_size} B\n<b>ID file:</b> ${video.file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -1676,7 +1698,9 @@ bot.on('video', async(ctx, next) => {
                     await saver.checkFile(`${video.file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails4)
                             ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails4.file_name}\n<b>Size:</b> ${video.file_size} B\n<b>ID file:</b> ${video.file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -1798,7 +1822,9 @@ bot.on('video', async(ctx, next) => {
                             await saver.checkFile(`${video.file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails1)
                                     ctx.reply(`✔️ Video disimpan \n<b>Nama file:</b> ${fileDetails1.file_name}\n<b>Size:</b> ${video.file_size} B\n<b>ID file:</b> ${video.file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id}`,{
@@ -1825,7 +1851,9 @@ bot.on('video', async(ctx, next) => {
                             await saver.checkFile(`${video.file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails2)
                                     ctx.reply(`✔️ Video disimpan \n<b>Nama file:</b> ${fileDetails2.file_name}\n<b>Size:</b> ${video.file_size} B\n<b>ID file:</b> ${video.file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id}`,{
@@ -1854,7 +1882,9 @@ bot.on('video', async(ctx, next) => {
                             await saver.checkFile(`${video.file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails3)
                                     ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails3.file_name}\n<b>Size:</b> ${video.file_size} B\n<b>ID file:</b> ${video.file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -1881,7 +1911,9 @@ bot.on('video', async(ctx, next) => {
                             await saver.checkFile(`${video.file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails4)
                                     ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails4.file_name}\n<b>Size:</b> ${video.file_size} B\n<b>ID file:</b> ${video.file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -1988,7 +2020,9 @@ bot.on('photo', async(ctx, next) => {
                     await saver.checkFile(`${photo[1].file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails1)
                             ctx.reply(`✔️ Photo disimpan \n<b>Nama file:</b> ${fileDetails1.file_name}\n<b>Size:</b> ${photo[1].file_size} B\n<b>ID file:</b> ${photo[1].file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo[1].file_unique_id}`,{
@@ -2015,7 +2049,9 @@ bot.on('photo', async(ctx, next) => {
                     await saver.checkFile(`${photo[1].file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails2)
                             ctx.reply(`✔️ Photo disimpan \n<b>Nama file:</b> ${fileDetails2.file_name}\n<b>Size:</b> ${photo[1].file_size} B\n<b>ID file:</b> ${photo[1].file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo[1].file_unique_id}`,{
@@ -2044,7 +2080,9 @@ bot.on('photo', async(ctx, next) => {
                     await saver.checkFile(`${photo[1].file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails3)
                             ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails3.file_name}\n<b>Size:</b> ${photo[1].file_size} B\n<b>ID file:</b> ${photo[1].file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo[1].file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -2071,7 +2109,9 @@ bot.on('photo', async(ctx, next) => {
                     await saver.checkFile(`${photo[1].file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
-                            ctx.reply(`File sudah ada.`)
+                            ctx.reply(`File sudah ada.`,{
+                                reply_to_message_id: ctx.message.message_id
+                            })
                         }else{
                             saver.saveFile(fileDetails4)
                             ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails4.file_name}\n<b>Size:</b> ${photo[1].file_size} B\n<b>ID file:</b> ${photo[1].file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo[1].file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -2193,7 +2233,9 @@ bot.on('photo', async(ctx, next) => {
                             await saver.checkFile(`${photo[1].file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails1)
                                     ctx.reply(`✔️ Photo disimpan \n<b>Nama file:</b> ${fileDetails1.file_name}\n<b>Size:</b> ${photo[1].file_size} B\n<b>ID file:</b> ${photo[1].file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo[1].file_unique_id}`,{
@@ -2220,7 +2262,9 @@ bot.on('photo', async(ctx, next) => {
                             await saver.checkFile(`${photo[1].file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails2)
                                     ctx.reply(`✔️ Photo disimpan \n<b>Nama file:</b> ${fileDetails2.file_name}\n<b>Size:</b> ${photo[1].file_size} B\n<b>ID file:</b> ${photo[1].file_unique_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo[1].file_unique_id}`,{
@@ -2249,7 +2293,9 @@ bot.on('photo', async(ctx, next) => {
                             await saver.checkFile(`${photo[1].file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails3)
                                     ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails3.file_name}\n<b>Size:</b> ${photo[1].file_size} B\n<b>ID file:</b> ${photo[1].file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo[1].file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
@@ -2276,7 +2322,9 @@ bot.on('photo', async(ctx, next) => {
                             await saver.checkFile(`${photo[1].file_unique_id}`).then((res) => {
                                 //console.log(res);
                                 if(res == true) {
-                                    ctx.reply(`File sudah ada.`)
+                                    ctx.reply(`File sudah ada.`,{
+                                        reply_to_message_id: ctx.message.message_id
+                                    })
                                 }else{
                                     saver.saveFile(fileDetails4)
                                     ctx.reply(`✔️ Grup disimpan \n<b>Nama file:</b> ${fileDetails4.file_name}\n<b>Size:</b> ${photo[1].file_size} B\n<b>ID file:</b> ${photo[1].file_unique_id}\n<b>ID grup:</b> ${ctx.message.media_group_id}\n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo[1].file_unique_id}\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`,{
