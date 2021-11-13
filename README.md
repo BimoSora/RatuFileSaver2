@@ -277,6 +277,9 @@ Anda dapat menghapus file 4 cara.</br>
 
 //Update
 
+HISTORY 10
+1. Jika media sudah ada akan ada pemberitahuan.
+
 HISTORY 9
 1. Perbaikan kirim media tanpa limit.
 
