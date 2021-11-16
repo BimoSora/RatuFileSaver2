@@ -19,6 +19,7 @@ Instalasi yang dibutuhkan
 <b>~ WINDOWS ~</b></br>
 <b>LANGKAH 1</b></br>
 - NGINX</br>
+Lewatkan saja langkah ini jika tidak punya domain.
 
 Sebelum anda pasang bot download dulu nginx versi windows <a href="https://nginx.org/en/download.html">di sini</a>.</br>
 Setelah download selesai extraxt zip dan pindahkan ke folder C:\ dan jangan lupa rename nama folder nginxnya menjadi "nginx". Jalankan nginxnya di cmd dengan perintah berikut.
@@ -27,6 +28,7 @@ Setelah download selesai extraxt zip dan pindahkan ke folder C:\ dan jangan lupa
 
 <b>LANGKAH 2</b></br>
 - SSL</br>
+Lewatkan saja langkah ini jika tidak punya domain.
 
 Buat terlebih dahulu SSL dan pastikan Anda punya ip publik dan domain yang terhubung ke server dan bisa diakses darimana saja.</br>
 
