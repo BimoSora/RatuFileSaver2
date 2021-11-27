@@ -14,7 +14,6 @@ Instalasi yang dibutuhkan
 <code>npm install mongodb</code></br>
 <code>npm install nodemon</code></br>
 <code>npm install telegraf</code></br>
-<code>npm install crypto</code></br>
 <hr>
 
 <b>~ WINDOWS ~</b></br>
