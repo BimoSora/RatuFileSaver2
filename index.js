@@ -4,7 +4,7 @@ const crypto = require('crypto')
 const config = require('./config.js')
 const bot = new Telegraf(config.TOKEN)
 
-process.env.TZ = "Asia/Jakarta";
+config.TZ = "Asia/Jakarta";
 
 //database
 const db = require('./config/connection')
@@ -931,7 +931,7 @@ bot.command('rem', (ctx) => {
         let msgArray = msg.split(' ')
         msgArray.shift()
         let text = msgArray.join(' ')
-        //console.log(text);
+        console.log(text);
         if(ctx.from.id == config.ADMIN || ctx.from.id == config.ADMIN1 || ctx.from.id == config.ADMIN2){
             saver.removeFile(text)
             ctx.reply('❌ 1 media dihapus berhasil')
@@ -2384,7 +2384,7 @@ bot.command('stats',async(ctx)=>{
         
     })
 })
-
+ 
 //nginx config
 bot.launch({
     webhook:{
