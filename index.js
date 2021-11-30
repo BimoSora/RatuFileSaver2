@@ -1245,7 +1245,7 @@ bot.on('document', async(ctx, next) => {
         if(ctx.message.media_group_id == undefined){
             if(document.file_name == undefined){
                 if(ctx.chat.type == 'private'){
-                    await saver.checkFile(`${document.file_unique_id}`).then((res) => {
+                    saver.checkFile(`${document.file_unique_id}`).then((res) => {
                         //console.log(res);
                         if(res == true) {
                             ctx.reply(`File sudah ada.`,{
@@ -1938,7 +1938,7 @@ bot.on('video', async(ctx, next) => {
                                 if(res == true) {
                                     ctx.reply(`${messagebanned(ctx)}`)
                                 }else{
-                                    await saver.checkFile(`${video.file_unique_id}`).then((res) => {
+                                    saver.checkFile(`${video.file_unique_id}`).then((res) => {
                                         //console.log(res);
                                         if(res == true) {
                                             ctx.reply(`File sudah ada.`,{
