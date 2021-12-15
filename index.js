@@ -66,13 +66,13 @@ function messagewelcome(ctx){
     return `${config.MESSAGEWELCOMEBOT}\n\n${today(ctx)}`;
 }
 function messagebanned(ctx){
-    return `⚠ ANDA DIBLOKIR KARENA MENYALAHGUNAKAN BOT, HUBUNGI ADMIN UNTUK BANDING.`;
+    return `⚠ YOU ARE BLOCKED FOR ABUSE OF A BOTT, CALL THE ADMIN FOR APPEAL.`;
 }
 function messagebotnoaddgroup(ctx){
-    return `Bot belum masuk channel/grup pemiliknya.`;
+    return `The bot has not entered the owner's channel/group.`;
 }
 function messagelink(ctx){
-    return `Kirim bot video, photo dan dokumen.`;
+    return `Send bot videos, photos and documents.`;
 }
 function documentation(ctx){
     var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
