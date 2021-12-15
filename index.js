@@ -157,7 +157,7 @@ bot.start(async(ctx)=>{
                         setTimeout(captionFunction, 1000)
                     }catch(error){
                         await ctx.deleteMessage()
-                        await ctx.reply(`Media tidak ditemukan atau sudah dihapus.`)
+                        await ctx.reply(`Media not found or has been removed.`)
                     }
                 }else{
                     let query2 = query;
@@ -202,7 +202,7 @@ bot.start(async(ctx)=>{
                         }
                     }catch(error){
                         await ctx.deleteMessage()
-                        await ctx.reply(`Media tidak ditemukan atau sudah dihapus.`)
+                        await ctx.reply(`Media not found or has been removed.`)
                     }
                 }
             }
@@ -309,7 +309,7 @@ bot.start(async(ctx)=>{
                                             }
                                         }else{
                                             await ctx.deleteMessage()
-                                            await ctx.reply(`Media tidak ditemukan atau sudah dihapus.`)
+                                            await ctx.reply(`Media not found or has been removed.`)
                                         }
                                     })
                                 }
@@ -374,7 +374,7 @@ bot.start(async(ctx)=>{
                                             }
                                         }else{
                                             await ctx.deleteMessage()
-                                            await ctx.reply(`Media tidak ditemukan atau sudah dihapus.`)
+                                            await ctx.reply(`Media not found or has been removed.`)
                                         }
                                     })
                                 }
