@@ -1156,6 +1156,7 @@ bot.command('broadcast',async(ctx)=>{
                 await ctx.reply('Broadcast starts (Message is broadcast from last joined to first).')
 
             }else{
+                await ctx.deleteMessage()
                 await ctx.reply(`Commands can only be used by Admin.`) 
             }
 
