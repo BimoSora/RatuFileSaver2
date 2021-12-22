@@ -391,6 +391,7 @@ bot.start(async(ctx)=>{
         //saving user details to the database
         await saver.saveUser(user)
     }
+    return next();
 })
 
 //DEFINING POP CALLBACK
@@ -482,6 +483,7 @@ bot.action('STARTUP', async(ctx)=>{
                 inline_keyboard:inKey
             }
         })
+    return next();
 })
 
 //TEST BOT
