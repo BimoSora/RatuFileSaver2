@@ -1156,10 +1156,10 @@ bot.command('remgrp', async(ctx, next) => {
         let msgArray = msg.split(' ')
         msgArray.shift()
         let text = msgArray.join(' ')
-        console.log(text);
+        console.log(media);
         if(ctx.from.id == config.ADMIN || ctx.from.id == config.ADMIN1 || ctx.from.id == config.ADMIN2){
             await ctx.deleteMessage()
-            saver.removeFileMedia(text)
+            saver.removeFileMedia(media)
             await ctx.reply('❌ Media group deleted successfully')
         }
     }
