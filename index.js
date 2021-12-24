@@ -1145,6 +1145,28 @@ bot.command('rem', async(ctx, next) => {
     return next();
 })
 
+bot.command('remgrp', async(ctx, next) => {
+    await new Promise((resolve, reject) =>{
+        setTimeout(()=>{
+            return resolve("Result");
+        }, 1_000);
+    });
+
+    if(ctx.chat.type == 'private') {
+        msg = ctx.message.text
+        let msgArray = msg.split(' ')
+        msgArray.shift()
+        let text = msgArray.join(' ')
+        console.log(text);
+        if(ctx.from.id == config.ADMIN || ctx.from.id == config.ADMIN1 || ctx.from.id == config.ADMIN2){
+            await ctx.deleteMessage()
+            saver.removeFileMedia(text)
+            await ctx.reply('❌ Media group deleted successfully')
+        }
+    }
+    return next();
+})
+
 //remove whole collection(remove all files)
 bot.command('clear', async(ctx, next)=>{
     await new Promise((resolve, reject) =>{
