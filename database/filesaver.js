@@ -112,7 +112,7 @@ module.exports={
 
     //removing file with mediaId
     removeFileMedia:(media)=>{
-        db.get().collection(collection.FILE_COLLECTION).remove({mediaId:media})
+        db.get().collection(collection.FILE_COLLECTION).removeMany({mediaId:media})
     },
 
     //ban user with user ID

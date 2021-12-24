@@ -147,16 +147,15 @@ bot.start(async(ctx, next)=>{
                             const data = res1[index];
                             mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
                         }
-                    
                         async function captionFunction() {
                             return await ctx.reply(`${captionbuild(ctx)}`,{
                                 parse_mode:'HTML'
                             })
                         }
+                        await ctx.deleteMessage()
                         await ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup);
                         setTimeout(captionFunction, 1000)
                     }catch(error){
-                        await ctx.deleteMessage()
                         await ctx.reply(`Media not found or has been removed.`)
                     }
                 }else{
@@ -279,7 +278,7 @@ bot.start(async(ctx, next)=>{
                                         const data = res1[index];
                                         mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
                                     }
-                                
+
                                     async function captionFunction() {
                                         return await ctx.reply(`${captionbuild(ctx)}`,{
                                             parse_mode:'HTML'
@@ -294,6 +293,7 @@ bot.start(async(ctx, next)=>{
                                                 await ctx.reply(`${messagebanned(ctx)}`)
                                             }
                                         }else{
+                                            await ctx.deleteMessage()
                                             await ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup);
                                             setTimeout(captionFunction, 1000)
                                         }
@@ -307,7 +307,6 @@ bot.start(async(ctx, next)=>{
                                                 await ctx.reply(`${messagebanned(ctx)}`)
                                             }
                                         }else{
-                                            await ctx.deleteMessage()
                                             await ctx.reply(`Media not found or has been removed.`)
                                         }
                                     })
