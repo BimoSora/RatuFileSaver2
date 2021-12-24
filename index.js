@@ -1606,7 +1606,7 @@ bot.on('video', async(ctx, next) => {
 
             if(ctx.message.media_group_id == undefined){
                 var tag = `✔️ Video save`;
-                var mediaId2 = ``;
+                var mediaId = ``;
                 var mediaId2 = ``;
                 if(video.file_name == undefined){
                     var file_name2 = `${today2(ctx)}`;
