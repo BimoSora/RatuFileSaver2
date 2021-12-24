@@ -1134,8 +1134,7 @@ bot.command('rem', async(ctx, next) => {
         msg = ctx.message.text
         let msgArray = msg.split(' ')
         msgArray.shift()
-        let text2 = msgArray.join(' ')
-        let text = `${text2}`.replace(/_/g, '-');
+        let text = msgArray.join(' ')
         console.log(text);
         if(ctx.from.id == config.ADMIN || ctx.from.id == config.ADMIN1 || ctx.from.id == config.ADMIN2){
             await ctx.deleteMessage()
@@ -1646,7 +1645,7 @@ bot.on('video', async(ctx, next) => {
                     })
                     await ctx.replyWithVideo(video.file_id, {
                         chat_id: config.LOG_CHANNEL,
-                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
+                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
                         parse_mode:'HTML'
                     })
                     fileDetails1 = {
@@ -1760,7 +1759,7 @@ bot.on('video', async(ctx, next) => {
                                 })
                                 await ctx.replyWithVideo(video.file_id, {
                                     chat_id: config.LOG_CHANNEL,
-                                    caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
+                                    caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
                                     parse_mode:'HTML'
                                 })
                                 fileDetails1 = {
