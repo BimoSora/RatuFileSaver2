@@ -153,7 +153,6 @@ bot.start(async(ctx, next)=>{
                                 parse_mode:'HTML'
                             })
                         }
-                        await ctx.deleteMessage()
                         await ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup);
                         setTimeout(captionFunction, 1000)
                     }catch(error){
@@ -295,7 +294,6 @@ bot.start(async(ctx, next)=>{
                                                 await ctx.reply(`${messagebanned(ctx)}`)
                                             }
                                         }else{
-                                            await ctx.deleteMessage()
                                             await ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup);
                                             setTimeout(captionFunction, 1000)
                                         }
