@@ -1612,7 +1612,7 @@ bot.on('photo', async(ctx) => {
                                 disable_web_page_preview: true,
                                 reply_to_message_id: ctx.message.message_id
                             })
-                            await ctx.replyWithDocument(photo.file_id, {
+                            await ctx.replyWithPhoto(photo.file_id, {
                                 chat_id: config.LOG_CHANNEL,
                                 caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2} ${caption2}`,
                                 parse_mode:'HTML'
