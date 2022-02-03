@@ -112,7 +112,10 @@ bot.start(async(ctx)=>{
             first_name:ctx.from.first_name,
             userId:ctx.from.id
         }
-        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
+        var botStatus = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.botInfo.id)
+        var member = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.from.id)
+        //console.log(member);
+        if(member.status == 'creator' || member.status == 'administrator'){
             //welcoming message on /start and ifthere is a query available we can send files
             if(length == 1){
                 await ctx.deleteMessage()
@@ -1055,7 +1058,10 @@ bot.command('remgrp', async(ctx) => {
         msgArray.shift()
         let media = msgArray.join(' ')
         //console.log(media);
-        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
+        var botStatus = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.botInfo.id)
+        var member = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.from.id)
+        //console.log(member);
+        if(member.status == 'creator' || member.status == 'administrator'){
             await ctx.deleteMessage()
             saver.removeFileMedia(media)
             await ctx.reply('❌ Media group deleted successfully')
@@ -1067,7 +1073,10 @@ bot.command('remgrp', async(ctx) => {
 bot.command('clear', async(ctx)=>{
 
     if(ctx.chat.type == 'private') {
-        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
+        var botStatus = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.botInfo.id)
+        var member = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.from.id)
+        //console.log(member);
+        if(member.status == 'creator' || member.status == 'administrator'){
             await ctx.deleteMessage()
             await saver.deleteCollection()
             await ctx.reply('❌ All media deleted successfully')
@@ -1257,34 +1266,10 @@ bot.on('document', async(ctx) => {
     });
 
     if(ctx.chat.type == 'private') {
-        var botStatus = await bot.telegram.getChatMember(channelId, ctx.botInfo.id)
-        var member = await bot.telegram.getChatMember(channelId, ctx.from.id)
+        var botStatus = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.botInfo.id)
+        var member = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.from.id)
         //console.log(member);
-        if(member.status == 'restricted' || member.status == 'left' || member.status == 'kicked'){
-            const profile2 = await bot.telegram.getUserProfilePhotos(ctx.from.id)
-            await saver.checkBan(`${ctx.from.id}`).then(async res => {
-                //console.log(res);
-                if(res == true) {
-                    await ctx.reply(`${messagebanned(ctx)}`)
-                }else{
-                    if(!profile2 || profile2.total_count == 0)
-                    return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
-                        parse_mode:'HTML',
-                        disable_web_page_preview: true,
-                        reply_markup:{
-                            inline_keyboard:inKey2
-                        }
-                    })
-                    await ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
-                        parse_mode:'HTML',
-                        disable_web_page_preview: true,
-                        reply_markup:{
-                            inline_keyboard:inKey2
-                        }
-                    })
-                }
-            })
-        }else{
+        if(member.status == 'creator' || member.status == 'administrator'){
             let document = ctx.message.document
     
             if(ctx.message.media_group_id == undefined){
@@ -1313,7 +1298,7 @@ bot.on('document', async(ctx) => {
             }else{
                 var tag = `✔️ Group save`;
                 var mediaId = `\n<b>Media ID</b>: ${ctx.message.media_group_id}`;
-                var mediaId2 = `\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
+                var mediaId2 = `\nhttps://t.me/${process.env.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
                 if(document.file_name == undefined){
                     var file_name2 = `${today2(ctx)}`;
                     if(ctx.message.caption == undefined){
@@ -1334,42 +1319,35 @@ bot.on('document', async(ctx) => {
                     }
                 }
             }
-    
-            await saver.checkBan(`${ctx.from.id}`).then(async res => {
+
+            await saver.checkFile(`${document.file_unique_id}`).then(async res => {
                 //console.log(res);
                 if(res == true) {
-                    await ctx.reply(`${messagebanned(ctx)}`)
-                }else{
-                    await saver.checkFile(`${document.file_unique_id}`).then(async res => {
-                        //console.log(res);
-                        if(res == true) {
-                            await ctx.reply(`File already exists.`,{
-                                reply_to_message_id: ctx.message.message_id
-                            })
-                        }else{
-                            await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2}`,{
-                                parse_mode: 'HTML',
-                                disable_web_page_preview: true,
-                                reply_to_message_id: ctx.message.message_id
-                            })
-                            await ctx.replyWithDocument(document.file_id, {
-                                chat_id: config.LOG_CHANNEL,
-                                caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2} ${caption2}`,
-                                parse_mode:'HTML'
-                            })
-                            let fileDetails1 = {
-                                file_name: file_name2,
-                                userId:ctx.from.id,
-                                file_id: document.file_id,
-                                mediaId: ctx.message.media_group_id,
-                                caption: ctx.message.caption,
-                                file_size: document.file_size,
-                                uniqueId: document.file_unique_id,
-                                type: 'document'
-                            }
-                            await saver.saveFile(fileDetails1)
-                        }
+                    await ctx.reply(`File already exists.`,{
+                        reply_to_message_id: ctx.message.message_id
                     })
+                }else{
+                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2}`,{
+                        parse_mode: 'HTML',
+                        disable_web_page_preview: true,
+                        reply_to_message_id: ctx.message.message_id
+                    })
+                    await ctx.replyWithDocument(document.file_id, {
+                        chat_id: process.env.LOG_CHANNEL,
+                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2} ${caption2}`,
+                        parse_mode:'HTML'
+                    })
+                    let fileDetails1 = {
+                        file_name: file_name2,
+                        userId:ctx.from.id,
+                        file_id: document.file_id,
+                        mediaId: ctx.message.media_group_id,
+                        caption: ctx.message.caption,
+                        file_size: document.file_size,
+                        uniqueId: document.file_unique_id,
+                        type: 'document'
+                    }
+                    await saver.saveFile(fileDetails1)
                 }
             })
         }
@@ -1387,34 +1365,10 @@ bot.on('video', async(ctx) => {
     });
 
     if(ctx.chat.type == 'private') {
-        var botStatus = await bot.telegram.getChatMember(channelId, ctx.botInfo.id)
-        var member = await bot.telegram.getChatMember(channelId, ctx.from.id)
+        var botStatus = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.botInfo.id)
+        var member = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.from.id)
         //console.log(member);
-        if(member.status == 'restricted' || member.status == 'left' || member.status == 'kicked'){
-            const profile2 = await bot.telegram.getUserProfilePhotos(ctx.from.id)
-            await saver.checkBan(`${ctx.from.id}`).then(async res => {
-                //console.log(res);
-                if(res == true) {
-                    await ctx.reply(`${messagebanned(ctx)}`)
-                }else{
-                    if(!profile2 || profile2.total_count == 0)
-                    return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
-                        parse_mode:'HTML',
-                        disable_web_page_preview: true,
-                        reply_markup:{
-                            inline_keyboard:inKey2
-                        }
-                    })
-                    await ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
-                        parse_mode:'HTML',
-                        disable_web_page_preview: true,
-                        reply_markup:{
-                            inline_keyboard:inKey2
-                        }
-                    })
-                }
-            })
-        }else{
+        if(member.status == 'creator' || member.status == 'administrator'){
             let video = ctx.message.video
     
             if(ctx.message.media_group_id == undefined){
@@ -1443,7 +1397,7 @@ bot.on('video', async(ctx) => {
             }else{
                 var tag = `✔️ Group save`;
                 var mediaId = `\n<b>Media ID</b>: ${ctx.message.media_group_id}`;
-                var mediaId2 = `\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
+                var mediaId2 = `\nhttps://t.me/${process.env.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
                 if(video.file_name == undefined){
                     var file_name2 = `${today2(ctx)}`;
                     if(ctx.message.caption == undefined){
@@ -1464,47 +1418,40 @@ bot.on('video', async(ctx) => {
                     }
                 }
             }
-    
-            await saver.checkBan(`${ctx.from.id}`).then(async res => {
+
+            await saver.checkFile(`${video.file_unique_id}`).then(async res => {
                 //console.log(res);
                 if(res == true) {
-                    await ctx.reply(`${messagebanned(ctx)}`)
-                }else{
-                    await saver.checkFile(`${video.file_unique_id}`).then(async res => {
-                        //console.log(res);
-                        if(res == true) {
-                            await ctx.reply(`File already exists.`,{
-                                reply_to_message_id: ctx.message.message_id
-                            })
-                        }else{
-                            await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2}`,{
-                                parse_mode: 'HTML',
-                                disable_web_page_preview: true,
-                                reply_to_message_id: ctx.message.message_id
-                            })
-                            await ctx.replyWithVideo(video.file_id, {
-                                chat_id: config.LOG_CHANNEL,
-                                caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
-                                parse_mode:'HTML'
-                            })
-                            let fileDetails1 = {
-                                file_name: file_name2,
-                                userId:ctx.from.id,
-                                file_id: video.file_id,
-                                mediaId: ctx.message.media_group_id,
-                                caption: ctx.message.caption,
-                                file_size: video.file_size,
-                                uniqueId: video.file_unique_id,
-                                type: 'video'
-                            }
-                            await saver.saveFile(fileDetails1)
-                        }
+                    await ctx.reply(`File already exists.`,{
+                        reply_to_message_id: ctx.message.message_id
                     })
+                }else{
+                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2}`,{
+                        parse_mode: 'HTML',
+                        disable_web_page_preview: true,
+                        reply_to_message_id: ctx.message.message_id
+                    })
+                    await ctx.replyWithVideo(video.file_id, {
+                        chat_id: process.env.LOG_CHANNEL,
+                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
+                        parse_mode:'HTML'
+                    })
+                    let fileDetails1 = {
+                        file_name: file_name2,
+                        userId:ctx.from.id,
+                        file_id: video.file_id,
+                        mediaId: ctx.message.media_group_id,
+                        caption: ctx.message.caption,
+                        file_size: video.file_size,
+                        uniqueId: video.file_unique_id,
+                        type: 'video'
+                    }
+                    await saver.saveFile(fileDetails1)
                 }
             })
         }
     }
-    return();
+    return next();
 })
 
 //photo files
@@ -1517,34 +1464,10 @@ bot.on('photo', async(ctx) => {
     });
 
     if(ctx.chat.type == 'private') {
-        var botStatus = await bot.telegram.getChatMember(channelId, ctx.botInfo.id)
-        var member = await bot.telegram.getChatMember(channelId, ctx.from.id)
+        var botStatus = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.botInfo.id)
+        var member = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.from.id)
         //console.log(member);
-        if(member.status == 'restricted' || member.status == 'left' || member.status == 'kicked'){
-            const profile2 = await bot.telegram.getUserProfilePhotos(ctx.from.id)
-            await saver.checkBan(`${ctx.from.id}`).then(async res => {
-                //console.log(res);
-                if(res == true) {
-                    await ctx.reply(`${messagebanned(ctx)}`)
-                }else{
-                    if(!profile2 || profile2.total_count == 0)
-                    return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
-                        parse_mode:'HTML',
-                        disable_web_page_preview: true,
-                        reply_markup:{
-                            inline_keyboard:inKey2
-                        }
-                    })
-                    await ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
-                        parse_mode:'HTML',
-                        disable_web_page_preview: true,
-                        reply_markup:{
-                            inline_keyboard:inKey2
-                        }
-                    })
-                }
-            })
-        }else{
+        if(member.status == 'creator' || member.status == 'administrator'){
             let photo = ctx.message.photo[1]
     
             if(ctx.message.media_group_id == undefined){
@@ -1573,7 +1496,7 @@ bot.on('photo', async(ctx) => {
             }else{
                 var tag = `✔️ Group save`;
                 var mediaId = `\n<b>Media ID</b>: ${ctx.message.media_group_id}`;
-                var mediaId2 = `\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
+                var mediaId2 = `\nhttps://t.me/${process.env.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
                 if(photo.file_name == undefined){
                     var file_name2 = `${today2(ctx)}`;
                     if(ctx.message.caption == undefined){
@@ -1594,42 +1517,35 @@ bot.on('photo', async(ctx) => {
                     }
                 }
             }
-    
-            await saver.checkBan(`${ctx.from.id}`).then(async res => {
+
+            await saver.checkFile(`${photo.file_unique_id}`).then(async res => {
                 //console.log(res);
                 if(res == true) {
-                    await ctx.reply(`${messagebanned(ctx)}`)
-                }else{
-                    await saver.checkFile(`${photo.file_unique_id}`).then(async res => {
-                        //console.log(res);
-                        if(res == true) {
-                            await ctx.reply(`File already exists.`,{
-                                reply_to_message_id: ctx.message.message_id
-                            })
-                        }else{
-                            await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2}`,{
-                                parse_mode: 'HTML',
-                                disable_web_page_preview: true,
-                                reply_to_message_id: ctx.message.message_id
-                            })
-                            await ctx.replyWithPhoto(photo.file_id, {
-                                chat_id: config.LOG_CHANNEL,
-                                caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2} ${caption2}`,
-                                parse_mode:'HTML'
-                            })
-                            let fileDetails1 = {
-                                file_name: file_name2,
-                                userId:ctx.from.id,
-                                file_id: photo.file_id,
-                                mediaId: ctx.message.media_group_id,
-                                caption: ctx.message.caption,
-                                file_size: photo.file_size,
-                                uniqueId: photo.file_unique_id,
-                                type: 'photo'
-                            }
-                            await saver.saveFile(fileDetails1)
-                        }
+                    await ctx.reply(`File already exists.`,{
+                        reply_to_message_id: ctx.message.message_id
                     })
+                }else{
+                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2}`,{
+                        parse_mode: 'HTML',
+                        disable_web_page_preview: true,
+                        reply_to_message_id: ctx.message.message_id
+                    })
+                    await ctx.replyWithPhoto(photo.file_id, {
+                        chat_id: process.env.LOG_CHANNEL,
+                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2} ${caption2}`,
+                        parse_mode:'HTML'
+                    })
+                    let fileDetails1 = {
+                        file_name: file_name2,
+                        userId:ctx.from.id,
+                        file_id: photo.file_id,
+                        mediaId: ctx.message.media_group_id,
+                        caption: ctx.message.caption,
+                        file_size: photo.file_size,
+                        uniqueId: photo.file_unique_id,
+                        type: 'photo'
+                    }
+                    await saver.saveFile(fileDetails1)
                 }
             })
         }
@@ -1641,22 +1557,34 @@ bot.command('stats',async(ctx)=>{
     
     await ctx.deleteMessage()
     const stats1 = await saver.getUser().then(async res=>{
-        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
+        var botStatus = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.botInfo.id)
+        var member = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.from.id)
+        //console.log(member);
+        if(member.status == 'creator' || member.status == 'administrator'){
             await ctx.reply(`📊 Total users: <b>${res.length}</b>`,{parse_mode:'HTML'})
         }
     })
     const stats2 = await saver.getMedia().then(async res=>{
-        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
+        var botStatus = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.botInfo.id)
+        var member = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.from.id)
+        //console.log(member);
+        if(member.status == 'creator' || member.status == 'administrator'){
             await ctx.reply(`📊 Total media: <b>${res.length}</b>`,{parse_mode:'HTML'})
         }
     })
     const stats3 = await saver.getBan().then(async res=>{
-        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
+        var botStatus = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.botInfo.id)
+        var member = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.from.id)
+        //console.log(member);
+        if(member.status == 'creator' || member.status == 'administrator'){
             await ctx.reply(`📊 Total users violate: <b>${res.length}</b>`,{parse_mode:'HTML'})
         }
     })
     const stats4 = await saver.getGroup().then(async res=>{
-        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
+        var botStatus = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.botInfo.id)
+        var member = await bot.telegram.getChatMember(process.env.LOG_CHANNEL, ctx.from.id)
+        //console.log(member);
+        if(member.status == 'creator' || member.status == 'administrator'){
             await ctx.reply(`📊 Total registered groups: <b>${res.length}</b>`,{parse_mode:'HTML'})
         }
     })
