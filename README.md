@@ -240,9 +240,6 @@ Kalian bisa menggunakan bot tanpa domain dan SSL dengan merubah kode dibawah ini
 ~ Bagaimana cara kirim pesan ke pengguna dari grup.</br>
 <code>/send</code> pesan. kirim pesan di grup.</br>
 
-~ Bagaimana cara kirim pesan ke pengguna dari bot.</br>
-<code>/sendchat</code> userID pesan. kirim ke pengguna melalui bot.</br>
-
 <h2>Cara menghapus file dari bot.</h2>
 Anda dapat menghapus file 4 cara.</br>
 
