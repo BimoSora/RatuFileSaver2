@@ -280,6 +280,9 @@ Anda dapat menghapus file 4 cara.</br>
 
 //Update
 
+HISTORY 11
+1. Admin digantikan dengan log grup/channel media.
+
 HISTORY 10
 1. Jika media sudah ada akan ada pemberitahuan.
 
