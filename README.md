@@ -81,8 +81,6 @@ Pemasangan ada di file config.js</br>
 <code>PORT</code> - Port didapat dari saat anda setting nginx tadi.</br>
 <code>TOKEN</code> - Dapatkan Token Bot dari Bot father.</br>
 
-<code>Info:</code> - Admin diambil dari akses grup/channel yang akan dijadikan tempat log media.
-
 <code>BOTUSERNAME</code> - Nama pengguna bot Anda tanpa '@' dan harus huruf kecil.</br>
 <code>DB_URL</code> - Buat akun di https://www.mongodb.com/cloud/atlas , nama database - RatuMediaFile ,nama collection - RatuFileBackup.Klik Connect dan pilih 'Hubungkan aplikasi Anda'.copy tautan dan ganti "< password >" dengan kata sandi pengguna yang memiliki akses ke DB dan ganti "myFirstDatabase" untuk "RatuMediaFile". Kalau mau ubah sesuai keinginan nama databasenya ada di folder config.</br>
 <b>Tautan DB_URL</b>
@@ -90,6 +88,8 @@ Pemasangan ada di file config.js</br>
     mongodb+srv://login:password@bot.qnbbq.mongodb.net/database?retryWrites=true&w=majority
 
 <code>LOG_CHANNEL</code> - buat saluran pribadi dan dapatkan ID saluran (jika Anda tidak dapat meneruskan ID saluran apa pun dari saluran ke @getidsbot itu mungkin terlihat seperti -1001234567899).</br>
+
+<code>Info:</code> - Admin diambil dari akses grup/channel yang akan dijadikan tempat log media.
 
 <b>LANGKAH 4</b></br>
 Pindahkan beberapa yang ada di folder bot</br>
@@ -186,8 +186,6 @@ Pemasangan ada di file config.js</br>
 <code>PORT</code> - Port didapat dari saat anda setting nginx tadi.</br>
 <code>TOKEN</code> - Dapatkan Token Bot dari Bot father.</br>
 
-<code>Info:</code> - Admin diambil dari akses grup/channel yang akan dijadikan tempat log media.
-
 <code>BOTUSERNAME</code> - Nama pengguna bot Anda tanpa '@' dan harus huruf kecil.</br>
 <code>DB_URL</code> - Buat akun di https://www.mongodb.com/cloud/atlas , nama database - RatuMediaFile ,nama collection - RatuFileBackup.Klik Connect dan pilih 'Hubungkan aplikasi Anda'.copy tautan dan ganti "< password >" dengan kata sandi pengguna yang memiliki akses ke DB dan ganti "myFirstDatabase" untuk "RatuMediaFile". Kalau mau ubah sesuai keinginan nama databasenya ada di folder config.</br>
 <b>Tautan DB_URL</b>
@@ -195,6 +193,8 @@ Pemasangan ada di file config.js</br>
     mongodb+srv://login:password@bot.qnbbq.mongodb.net/database?retryWrites=true&w=majority
     
 <code>LOG_CHANNEL</code> - buat saluran pribadi dan dapatkan ID saluran (jika Anda tidak dapat meneruskan ID saluran apa pun dari saluran ke @getidsbot itu mungkin terlihat seperti -1001234567899).</br>
+
+<code>Info:</code> - Admin diambil dari akses grup/channel yang akan dijadikan tempat log media.
 
 <b>LANGKAH 4</b></br>
 Pindahkan beberapa yang ada di folder bot</br>
