@@ -1056,7 +1056,6 @@ bot.command('clear', async(ctx)=>{
 
 //removing all files sent by a user
 bot.command('remall', async(ctx) => {
-    
     if(ctx.chat.type == 'private') {
         const msg = ctx.message.text
         let msgArray = msg.split(' ')
@@ -1076,7 +1075,6 @@ bot.command('remall', async(ctx) => {
 
 //broadcasting message to bot users(from last joined to first)
 bot.command('broadcast',async(ctx)=>{
-
     if(ctx.chat.type == 'private') {
         const msg = ctx.message.text
         let msgArray = msg.split(' ')
@@ -1131,7 +1129,6 @@ bot.command('broadcast',async(ctx)=>{
 
 //ban user with user id
 bot.command('banchat', async(ctx) => {
-    
     if(ctx.chat.type == 'private') {
         const msg = ctx.message.text
         let msgArray = msg.split(' ')
