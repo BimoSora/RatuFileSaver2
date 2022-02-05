@@ -100,7 +100,6 @@ const inKey2 = [
 
 //BOT START
 bot.start(async(ctx)=>{
-
     if(ctx.chat.type == 'private') {
         const msg = ctx.message.text
         let msgArray = msg.split(' ')
@@ -113,10 +112,8 @@ bot.start(async(ctx)=>{
             first_name:ctx.from.first_name,
             userId:ctx.from.id
         }
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-        console.log(memberaccess);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             //welcoming message on /start and ifthere is a query available we can send files
             if(length == 1){
                 await ctx.deleteMessage()
@@ -162,7 +159,7 @@ bot.start(async(ctx)=>{
                     let query2 = query;
                     try{
                         const res2 = await saver.getFile2(query2)
-                    
+        
                         async function captionFunction2() {
                             await ctx.reply(`${captionbuild(ctx)}`,{
                                 parse_mode:'HTML'
@@ -207,7 +204,7 @@ bot.start(async(ctx)=>{
             }
         }else{
             try {
-                
+    
                 var member = await bot.telegram.getChatMember(channelId, ctx.from.id)
                 //console.log(member);
                 if(member.status == 'restricted' || member.status == 'left' || member.status == 'kicked'){
@@ -278,7 +275,7 @@ bot.start(async(ctx)=>{
                                         const data = res1[index];
                                         mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
                                     }
-                                
+                    
                                     async function captionFunction() {
                                         return await ctx.reply(`${captionbuild(ctx)}`,{
                                             parse_mode:'HTML'
@@ -315,7 +312,7 @@ bot.start(async(ctx)=>{
                                 let query2 = query;
                                 try{
                                     const res2 = await saver.getFile2(query2)
-                                
+                    
                                     async function captionFunction2() {
                                         await ctx.reply(`${captionbuild(ctx)}`,{
                                             parse_mode:'HTML'
@@ -390,9 +387,21 @@ bot.start(async(ctx)=>{
     }
 })
 
+//DEFINING POP CALLBACK
+bot.action('POP', async(ctx)=>{
+    await ctx.deleteMessage()
+    await ctx.reply(`${messagelink(ctx)}`,{
+        parse_mode: 'HTML',
+        reply_markup:{
+            inline_keyboard: [
+                [{text:'Batal',callback_data:'STARTUP'}]
+            ]
+        }
+    })
+})
+
 //DEFINING DOC CALLBACK
 bot.action('DOC', async(ctx)=>{
-    
     await ctx.deleteMessage()
     await ctx.reply(`${documentation(ctx)}`,{
         parse_mode: 'HTML',
@@ -405,7 +414,6 @@ bot.action('DOC', async(ctx)=>{
 })
 
 bot.action('SRC', async(ctx)=>{
-    
     await ctx.deleteMessage()
     await ctx.reply(`${helpcommand.botsrc}`,{
         parse_mode: 'HTML',
@@ -419,7 +427,6 @@ bot.action('SRC', async(ctx)=>{
 })
 
 bot.action('HELP',async(ctx)=>{
-    
     await ctx.deleteMessage()
     await ctx.reply(`${helpcommand.bothelp}`,{
         parse_mode: 'HTML',
@@ -434,7 +441,6 @@ bot.action('HELP',async(ctx)=>{
 })
 
 bot.action('COMM', async(ctx)=>{
-    
     await ctx.deleteMessage()
     await ctx.reply(`${helpcommand.botcommand}`,{
         parse_mode: 'HTML',
@@ -448,7 +454,6 @@ bot.action('COMM', async(ctx)=>{
 })
 
 bot.action('STARTUP', async(ctx)=>{
-
     await ctx.deleteMessage()
     const profile = await bot.telegram.getUserProfilePhotos(ctx.from.id)
     if(!profile || profile.total_count == 0)
@@ -470,7 +475,6 @@ bot.action('STARTUP', async(ctx)=>{
 
 //TEST BOT
 bot.hears(/ping/i,async(ctx)=>{
-    
     if(ctx.chat.type == 'private') {    
         await saver.checkBan(`${ctx.from.id}`).then(async res => {
             //console.log(res);
@@ -494,13 +498,11 @@ bot.hears(/ping/i,async(ctx)=>{
 })
 
 bot.action('PONG',async(ctx)=>{
-    
     await ctx.deleteMessage()
 })
 
 //GROUP COMMAND
 bot.command('reload',async(ctx)=>{
-
     var memberstatus = await bot.telegram.getChatMember(ctx.chat.id, ctx.from.id)
     //console.log(memberstatus);
     const group = {
@@ -522,7 +524,6 @@ bot.command('reload',async(ctx)=>{
 })
 
 bot.command('kick',async(ctx)=>{
-    
     const groupDetails = await saver.getGroup().then(async res=>{
         const n = res.length
         const groupId = []
@@ -537,8 +538,8 @@ bot.command('kick',async(ctx)=>{
                 if(ctx.chat.type == 'group' || ctx.chat.type == 'supergroup') {
                     if(memberstatus.status == 'administrator'){  
                         await ctx.deleteMessage()  
-                        if(memberstatus.can_restrict_members == true){                
-                            if(ctx.message.reply_to_message == undefined){
+                        if(memberstatus.can_restrict_members == true){       
+                                                if(ctx.message.reply_to_message == undefined){
                                 let args = ctx.message.text.split(" ").slice(1)
                                 await bot.telegram.kickChatMember(ctx.chat.id, Number(args[0])).then(async result =>{
                                     //console.log(result)
@@ -582,7 +583,6 @@ bot.command('kick',async(ctx)=>{
 })
 
 bot.command('ban',async(ctx)=>{
-    
     const groupDetails = await saver.getGroup().then(async res => {
         const n = res.length
         const groupId = []
@@ -831,7 +831,6 @@ bot.command('unban',async(ctx)=>{
 })
 
 bot.command('pin',async(ctx)=>{
-    
     const groupDetails = await saver.getGroup().then(async res =>{
         const n = res.length
         const groupId = []
@@ -930,7 +929,6 @@ bot.command('send',async(ctx)=>{
         }
         async function send() {
             for (const group of groupId) {
-                var botStatus = await bot.telegram.getChatMember(group, ctx.botInfo.id)
                 var memberstatus = await bot.telegram.getChatMember(group, ctx.from.id)
                 //console.log(memberstatus);
 
@@ -1014,7 +1012,6 @@ bot.command('getid',async(ctx)=>{
 
 //remove files with file_id
 bot.command('rem', async(ctx) => {
-
     if(ctx.chat.type == 'private') {
         const msg = ctx.message.text
         let msgArray = msg.split(' ')
@@ -1022,10 +1019,7 @@ bot.command('rem', async(ctx) => {
         let text2 = msgArray.join(' ')
         let text = `${text2}`.replace(/_/g, '-');
         console.log(text);
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-        //console.log(memberaccess);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             await ctx.deleteMessage()
             saver.removeFile(text)
             await ctx.reply('❌ 1 media deleted successfully')
@@ -1035,17 +1029,13 @@ bot.command('rem', async(ctx) => {
 })
 
 bot.command('remgrp', async(ctx) => {
-
     if(ctx.chat.type == 'private') {
         const msg = ctx.message.text
         let msgArray = msg.split(' ')
         msgArray.shift()
         let media = msgArray.join(' ')
         //console.log(media);
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-        //console.log(memberaccess);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             await ctx.deleteMessage()
             saver.removeFileMedia(media)
             await ctx.reply('❌ Media group deleted successfully')
@@ -1055,12 +1045,8 @@ bot.command('remgrp', async(ctx) => {
 
 //remove whole collection(remove all files)
 bot.command('clear', async(ctx)=>{
-
     if(ctx.chat.type == 'private') {
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-        //console.log(memberaccess);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             await ctx.deleteMessage()
             await saver.deleteCollection()
             await ctx.reply('❌ All media deleted successfully')
@@ -1078,10 +1064,8 @@ bot.command('remall', async(ctx) => {
         let text = msgArray.join(' ')
         //console.log(text);
         let id = parseInt(text)
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-        //console.log(memberaccess);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             await ctx.deleteMessage()
             await saver.removeUserFile(id)
             await ctx.reply('❌ Delete all user media successfully')
@@ -1129,10 +1113,8 @@ bot.command('broadcast',async(ctx)=>{
                 })
 
             }
-            
-            var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-            //console.log(memberaccess);
-            if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+
+            if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
                 await ctx.deleteMessage()
                 broadcast(text)
                 await ctx.reply('Broadcast starts (Message is broadcast from last joined to first).')
@@ -1161,10 +1143,7 @@ bot.command('banchat', async(ctx) => {
         }
 
         if(ctx.chat.type == 'private') {
-            
-            var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-            //console.log(memberaccess);
-            if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+            if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
                 await ctx.deleteMessage()
                 await saver.banUser(userId).then(async res => {
                     await ctx.reply('❌ Banned')
@@ -1177,7 +1156,6 @@ bot.command('banchat', async(ctx) => {
 
 //unban user with user id
 bot.command('unbanchat', async(ctx) => {
-    
     if(ctx.chat.type == 'private') {
         const msg = ctx.message.text
         let msgArray = msg.split(' ')
@@ -1189,10 +1167,7 @@ bot.command('unbanchat', async(ctx) => {
         }
 
         if(ctx.chat.type == 'private') {
-            
-            var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-            //console.log(memberaccess);
-            if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+            if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
                 await ctx.deleteMessage()
                 await saver.unBan(userId).then(async res => {
                     await ctx.reply('✅ Finished')
@@ -1213,10 +1188,7 @@ bot.on('document', async(ctx) => {
     //});
 
     if(ctx.chat.type == 'private') {
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-        //console.log(memberaccess);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             let document = ctx.message.document
     
             if(ctx.message.media_group_id == undefined){
@@ -1234,7 +1206,7 @@ bot.on('document', async(ctx) => {
                     var exstension2 = document.file_name;
                     var regex2 = /\.[A-Za-z0-9]+$/gm
                     var doctext2 = exstension2.replace(regex2, '');
-                    
+        
                     var file_name2 = `${doctext2}`;
                     if(ctx.message.caption == undefined){
                         var caption2 =  ``;
@@ -1245,7 +1217,7 @@ bot.on('document', async(ctx) => {
             }else{
                 var tag = `✔️ Group save`;
                 var mediaId = `\n<b>Media ID</b>: ${ctx.message.media_group_id}`;
-                var mediaId2 = `\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
+                var mediaId2 = `\nhttps://t.me/$(config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
                 if(document.file_name == undefined){
                     var file_name2 = `${today2(ctx)}`;
                     if(ctx.message.caption == undefined){
@@ -1257,7 +1229,7 @@ bot.on('document', async(ctx) => {
                     var exstension2 = document.file_name;
                     var regex2 = /\.[A-Za-z0-9]+$/gm
                     var doctext2 = exstension2.replace(regex2, '');
-                    
+        
                     var file_name2 = `${doctext2}`;
                     if(ctx.message.caption == undefined){
                         var caption2 =  ``;
@@ -1274,14 +1246,14 @@ bot.on('document', async(ctx) => {
                         reply_to_message_id: ctx.message.message_id
                     })
                 }else{
-                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2}`,{
+                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2}`,{
                         parse_mode: 'HTML',
                         disable_web_page_preview: true,
                         reply_to_message_id: ctx.message.message_id
                     })
                     await ctx.replyWithDocument(document.file_id, {
                         chat_id: logchannel,
-                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2} ${caption2}`,
+                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2} ${caption2}`,
                         parse_mode:'HTML'
                     })
                     let fileDetails1 = {
@@ -1312,10 +1284,7 @@ bot.on('video', async(ctx) => {
     //});
 
     if(ctx.chat.type == 'private') {
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-        //console.log(memberaccess);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             let video = ctx.message.video
     
             if(ctx.message.media_group_id == undefined){
@@ -1333,7 +1302,7 @@ bot.on('video', async(ctx) => {
                     var exstension2 = video.file_name;
                     var regex2 = /\.[A-Za-z0-9]+$/gm
                     var vidtext2 = exstension2.replace(regex2, '');
-                    
+        
                     var file_name2 = `${vidtext2}`;
                     if(ctx.message.caption == undefined){
                         var caption2 =  ``;
@@ -1344,7 +1313,7 @@ bot.on('video', async(ctx) => {
             }else{
                 var tag = `✔️ Group save`;
                 var mediaId = `\n<b>Media ID</b>: ${ctx.message.media_group_id}`;
-                var mediaId2 = `\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
+                var mediaId2 = `\nhttps://t.me/$(config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
                 if(video.file_name == undefined){
                     var file_name2 = `${today2(ctx)}`;
                     if(ctx.message.caption == undefined){
@@ -1356,7 +1325,7 @@ bot.on('video', async(ctx) => {
                     var exstension2 = video.file_name;
                     var regex2 = /\.[A-Za-z0-9]+$/gm
                     var vidtext2 = exstension2.replace(regex2, '');
-                    
+        
                     var file_name2 = `${vidtext2}`;
                     if(ctx.message.caption == undefined){
                         var caption2 =  ``;
@@ -1373,14 +1342,14 @@ bot.on('video', async(ctx) => {
                         reply_to_message_id: ctx.message.message_id
                     })
                 }else{
-                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2}`,{
+                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2}`,{
                         parse_mode: 'HTML',
                         disable_web_page_preview: true,
                         reply_to_message_id: ctx.message.message_id
                     })
                     await ctx.replyWithVideo(video.file_id, {
                         chat_id: logchannel,
-                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
+                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
                         parse_mode:'HTML'
                     })
                     let fileDetails1 = {
@@ -1411,10 +1380,9 @@ bot.on('photo', async(ctx) => {
     //});
 
     if(ctx.chat.type == 'private') {
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
+
         //console.log(member);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             let photo = ctx.message.photo[1]
     
             if(ctx.message.media_group_id == undefined){
@@ -1432,7 +1400,7 @@ bot.on('photo', async(ctx) => {
                     var exstension2 = photo.file_name;
                     var regex2 = /\.[A-Za-z0-9]+$/gm
                     var photext2 = exstension2.replace(regex2, '');
-                    
+        
                     var file_name2 = `${photext2}`;
                     if(ctx.message.caption == undefined){
                         var caption2 =  ``;
@@ -1443,7 +1411,7 @@ bot.on('photo', async(ctx) => {
             }else{
                 var tag = `✔️ Group save`;
                 var mediaId = `\n<b>Media ID</b>: ${ctx.message.media_group_id}`;
-                var mediaId2 = `\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
+                var mediaId2 = `\nhttps://t.me/$(config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
                 if(photo.file_name == undefined){
                     var file_name2 = `${today2(ctx)}`;
                     if(ctx.message.caption == undefined){
@@ -1455,7 +1423,7 @@ bot.on('photo', async(ctx) => {
                     var exstension2 = photo.file_name;
                     var regex2 = /\.[A-Za-z0-9]+$/gm
                     var photext2 = exstension2.replace(regex2, '');
-                    
+        
                     var file_name2 = `${photext2}`;
                     if(ctx.message.caption == undefined){
                         var caption2 =  ``;
@@ -1472,14 +1440,14 @@ bot.on('photo', async(ctx) => {
                         reply_to_message_id: ctx.message.message_id
                     })
                 }else{
-                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2}`,{
+                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2}`,{
                         parse_mode: 'HTML',
                         disable_web_page_preview: true,
                         reply_to_message_id: ctx.message.message_id
                     })
                     await ctx.replyWithPhoto(photo.file_id, {
                         chat_id: logchannel,
-                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2} ${caption2}`,
+                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2} ${caption2}`,
                         parse_mode:'HTML'
                     })
                     let fileDetails1 = {
@@ -1504,34 +1472,25 @@ bot.command('stats',async(ctx)=>{
     
     await ctx.deleteMessage()
     const stats1 = await saver.getUser().then(async res=>{
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
-        //console.log(memberaccess);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             await ctx.reply(`📊 Total users: <b>${res.length}</b>`,{parse_mode:'HTML'})
         }
     })
     const stats2 = await saver.getMedia().then(async res=>{
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
         //console.log(member);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             await ctx.reply(`📊 Total media: <b>${res.length}</b>`,{parse_mode:'HTML'})
         }
     })
     const stats3 = await saver.getBan().then(async res=>{
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
         //console.log(member);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             await ctx.reply(`📊 Total users violate: <b>${res.length}</b>`,{parse_mode:'HTML'})
         }
     })
     const stats4 = await saver.getGroup().then(async res=>{
-        
-        var memberaccess = await bot.telegram.getChatMember(logchannel, ctx.from.id)
         //console.log(member);
-        if(memberaccess.status == 'creator' || memberaccess.status == 'administrator'){
+        if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             await ctx.reply(`📊 Total registered groups: <b>${res.length}</b>`,{parse_mode:'HTML'})
         }
     })
