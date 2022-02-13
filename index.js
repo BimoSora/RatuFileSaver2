@@ -1183,10 +1183,10 @@ bot.on('document', async(ctx) => {
     //    }, 10_000);
     //});
 
-    if(ctx.chat.type == 'private') {
+     if(ctx.chat.type == 'private') {
         if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
             let document = ctx.message.document
-    
+
             if(ctx.message.media_group_id == undefined){
                 var tag = `✔️ Document save`;
                 var mediaId = ``;
@@ -1202,7 +1202,7 @@ bot.on('document', async(ctx) => {
                     var exstension2 = document.file_name;
                     var regex2 = /\.[A-Za-z0-9]+$/gm
                     var doctext2 = exstension2.replace(regex2, '');
-        
+                    
                     var file_name2 = `${doctext2}`;
                     if(ctx.message.caption == undefined){
                         var caption2 =  ``;
@@ -1213,7 +1213,7 @@ bot.on('document', async(ctx) => {
             }else{
                 var tag = `✔️ Group save`;
                 var mediaId = `\n<b>Media ID</b>: ${ctx.message.media_group_id}`;
-                var mediaId2 = `\nhttps://t.me/$(config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
+                var mediaId2 = `\nhttps://t.me/${process.env.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
                 if(document.file_name == undefined){
                     var file_name2 = `${today2(ctx)}`;
                     if(ctx.message.caption == undefined){
@@ -1225,7 +1225,7 @@ bot.on('document', async(ctx) => {
                     var exstension2 = document.file_name;
                     var regex2 = /\.[A-Za-z0-9]+$/gm
                     var doctext2 = exstension2.replace(regex2, '');
-        
+                    
                     var file_name2 = `${doctext2}`;
                     if(ctx.message.caption == undefined){
                         var caption2 =  ``;
@@ -1242,17 +1242,17 @@ bot.on('document', async(ctx) => {
                         reply_to_message_id: ctx.message.message_id
                     })
                 }else{
-                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2}`,{
+                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2}`,{
                         parse_mode: 'HTML',
                         disable_web_page_preview: true,
                         reply_to_message_id: ctx.message.message_id
                     })
                     await ctx.replyWithDocument(document.file_id, {
                         chat_id: logchannel,
-                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2} ${caption2}`,
+                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2} ${caption2}`,
                         parse_mode:'HTML'
                     })
-                    let fileDetails1 = {
+                    const fileDetails1 = {
                         file_name: file_name2,
                         userId:ctx.from.id,
                         file_id: document.file_id,
@@ -1309,7 +1309,7 @@ bot.on('video', async(ctx) => {
             }else{
                 var tag = `✔️ Group save`;
                 var mediaId = `\n<b>Media ID</b>: ${ctx.message.media_group_id}`;
-                var mediaId2 = `\nhttps://t.me/$(config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
+                var mediaId2 = `\nhttps://t.me/${process.env.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
                 if(video.file_name == undefined){
                     var file_name2 = `${today2(ctx)}`;
                     if(ctx.message.caption == undefined){
@@ -1338,14 +1338,14 @@ bot.on('video', async(ctx) => {
                         reply_to_message_id: ctx.message.message_id
                     })
                 }else{
-                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2}`,{
+                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2}`,{
                         parse_mode: 'HTML',
                         disable_web_page_preview: true,
                         reply_to_message_id: ctx.message.message_id
                     })
                     await ctx.replyWithVideo(video.file_id, {
                         chat_id: logchannel,
-                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
+                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
                         parse_mode:'HTML'
                     })
                     let fileDetails1 = {
@@ -1376,11 +1376,9 @@ bot.on('photo', async(ctx) => {
     //});
 
     if(ctx.chat.type == 'private') {
-
-        //console.log(member);
         if(ctx.from.id == Number(config.ADMIN) || ctx.from.id == Number(config.ADMIN1) || ctx.from.id == Number(config.ADMIN2)){
-            let photo = ctx.message.photo[1]
-    
+            const photo = ctx.message.photo[1]
+
             if(ctx.message.media_group_id == undefined){
                 var tag = `✔️ Photo save`;
                 var mediaId = ``;
@@ -1396,7 +1394,7 @@ bot.on('photo', async(ctx) => {
                     var exstension2 = photo.file_name;
                     var regex2 = /\.[A-Za-z0-9]+$/gm
                     var photext2 = exstension2.replace(regex2, '');
-        
+                    
                     var file_name2 = `${photext2}`;
                     if(ctx.message.caption == undefined){
                         var caption2 =  ``;
@@ -1407,7 +1405,7 @@ bot.on('photo', async(ctx) => {
             }else{
                 var tag = `✔️ Group save`;
                 var mediaId = `\n<b>Media ID</b>: ${ctx.message.media_group_id}`;
-                var mediaId2 = `\nhttps://t.me/$(config.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
+                var mediaId2 = `\nhttps://t.me/${process.env.BOTUSERNAME}?start=grp_${ctx.message.media_group_id}`;
                 if(photo.file_name == undefined){
                     var file_name2 = `${today2(ctx)}`;
                     if(ctx.message.caption == undefined){
@@ -1419,7 +1417,7 @@ bot.on('photo', async(ctx) => {
                     var exstension2 = photo.file_name;
                     var regex2 = /\.[A-Za-z0-9]+$/gm
                     var photext2 = exstension2.replace(regex2, '');
-        
+                    
                     var file_name2 = `${photext2}`;
                     if(ctx.message.caption == undefined){
                         var caption2 =  ``;
@@ -1436,17 +1434,17 @@ bot.on('photo', async(ctx) => {
                         reply_to_message_id: ctx.message.message_id
                     })
                 }else{
-                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2}`,{
+                    await ctx.reply(`${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2}`,{
                         parse_mode: 'HTML',
                         disable_web_page_preview: true,
                         reply_to_message_id: ctx.message.message_id
                     })
                     await ctx.replyWithPhoto(photo.file_id, {
                         chat_id: logchannel,
-                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/$(config.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2} ${caption2}`,
+                        caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2} ${caption2}`,
                         parse_mode:'HTML'
                     })
-                    let fileDetails1 = {
+                    const fileDetails1 = {
                         file_name: file_name2,
                         userId:ctx.from.id,
                         file_id: photo.file_id,
