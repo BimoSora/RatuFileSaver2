@@ -1175,7 +1175,7 @@ bot.command('unbanchat', async(ctx) => {
 })
 
 //saving documents to db and generating link
-bot.on('document', async(ctx) => {
+bot.on('document', async(ctx,next) => {
 
     await new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -1271,7 +1271,7 @@ bot.on('document', async(ctx) => {
 })
 
 //video files
-bot.on('video', async(ctx) => {
+bot.on('video', async(ctx,next) => {
 
     await new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -1367,7 +1367,7 @@ bot.on('video', async(ctx) => {
 })
 
 //photo files
-bot.on('photo', async(ctx) => {
+bot.on('photo', async(ctx,next) => {
 
     await new Promise((resolve, reject) => {
         setTimeout(() => {
