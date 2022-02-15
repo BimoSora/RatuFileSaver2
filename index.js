@@ -20,7 +20,6 @@ db.connect((err) => {
 
 //ID Channel/Group
 const channelId = `${config.CHANNELJOIN}`;
-const logchannel = `${config.LOG_CHANNEL}`;
 
 function today(ctx){
     var today = new Date();
