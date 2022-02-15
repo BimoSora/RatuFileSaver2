@@ -1252,7 +1252,7 @@ bot.on('document', async(ctx,next) => {
                         caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2} ${caption2}`,
                         parse_mode:'HTML'
                     })
-                    const fileDetails1 = {
+                    let fileDetails1 = {
                         file_name: file_name2,
                         userId:ctx.from.id,
                         file_id: document.file_id,
@@ -1348,7 +1348,7 @@ bot.on('video', async(ctx,next) => {
                         caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2} ${caption2}`,
                         parse_mode:'HTML'
                     })
-                    const fileDetails1 = {
+                    let fileDetails1 = {
                         file_name: file_name2,
                         userId:ctx.from.id,
                         file_id: video.file_id,
@@ -1444,7 +1444,7 @@ bot.on('photo', async(ctx,next) => {
                         caption: `${tag} \n<b>From:</b> ${ctx.from.id}\n<b>Name:</b> <a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a>\n\n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${process.env.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2} ${caption2}`,
                         parse_mode:'HTML'
                     })
-                    const fileDetails1 = {
+                    let fileDetails1 = {
                         file_name: file_name2,
                         userId:ctx.from.id,
                         file_id: photo.file_id,
