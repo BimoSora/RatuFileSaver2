@@ -502,7 +502,7 @@ bot.action('PONG',async(ctx)=>{
 
 //GROUP COMMAND
 bot.command('reload',async(ctx)=>{
-    var botStatus = await bot.telegram.getChatMember(ctx.chat.id, ctx.botInfo.id)
+    var botStatus2 = await bot.telegram.getChatMember(ctx.chat.id, ctx.botInfo.id)
     var memberstatus = await bot.telegram.getChatMember(ctx.chat.id, ctx.from.id)
     //console.log(memberstatus);
     const group = {
@@ -532,7 +532,7 @@ bot.command('kick',async(ctx)=>{
         }
         async function kick() {
             for (const group of groupId) {
-                var botStatus = await bot.telegram.getChatMember(group, ctx.botInfo.id)
+                var botStatus2 = await bot.telegram.getChatMember(group, ctx.botInfo.id)
                 var memberstatus = await bot.telegram.getChatMember(group, ctx.from.id)
                 //console.log(memberstatus);
 
@@ -592,7 +592,7 @@ bot.command('ban',async(ctx)=>{
         }
         async function ban() {
             for (const group of groupId) {
-                var botStatus = await bot.telegram.getChatMember(group, ctx.botInfo.id)
+                var botStatus2 = await bot.telegram.getChatMember(group, ctx.botInfo.id)
                 var memberstatus = await bot.telegram.getChatMember(group, ctx.from.id)
                 //console.log(memberstatus);
 
@@ -749,7 +749,6 @@ bot.command('ban',async(ctx)=>{
 })
 
 bot.command('unban',async(ctx)=>{
-    
     const groupDetails = await saver.getGroup().then(async res => {
         const n = res.length
         const groupId = []
@@ -758,7 +757,7 @@ bot.command('unban',async(ctx)=>{
         }
         async function unban() {
             for (const group of groupId) {
-                var botStatus = await bot.telegram.getChatMember(group, ctx.botInfo.id)
+                var botStatus2 = await bot.telegram.getChatMember(group, ctx.botInfo.id)
                 var memberstatus = await bot.telegram.getChatMember(group, ctx.from.id)
                 //console.log(memberstatus);
 
@@ -842,7 +841,7 @@ bot.command('pin',async(ctx)=>{
         }
         async function pin() {
             for (const group of groupId) {
-                var botStatus = await bot.telegram.getChatMember(group, ctx.botInfo.id)
+                var botStatus2 = await bot.telegram.getChatMember(group, ctx.botInfo.id)
                 var memberstatus = await bot.telegram.getChatMember(group, ctx.from.id)
                 //console.log(memberstatus);
 
@@ -882,7 +881,6 @@ bot.command('pin',async(ctx)=>{
 })
 
 bot.command('unpin',async(ctx)=>{
-    
     const groupDetails = await saver.getGroup().then( async res=>{
         const n = res.length
         const groupId = []
@@ -891,7 +889,7 @@ bot.command('unpin',async(ctx)=>{
         }
         async function unpin() {
             for (const group of groupId) {
-                var botStatus = await bot.telegram.getChatMember(group, ctx.botInfo.id)
+                var botStatus2 = await bot.telegram.getChatMember(group, ctx.botInfo.id)
                 var memberstatus = await bot.telegram.getChatMember(group, ctx.from.id)
                 //console.log(memberstatus);
 
@@ -925,7 +923,6 @@ bot.command('unpin',async(ctx)=>{
 })
 
 bot.command('send',async(ctx)=>{
-    
     const groupDetails = await saver.getGroup().then(async res =>{
         const n = res.length
         const groupId = []
@@ -934,7 +931,7 @@ bot.command('send',async(ctx)=>{
         }
         async function send() {
             for (const group of groupId) {
-                var botStatus = await bot.telegram.getChatMember(group, ctx.botInfo.id)
+                var botStatus2 = await bot.telegram.getChatMember(group, ctx.botInfo.id)
                 var memberstatus = await bot.telegram.getChatMember(group, ctx.from.id)
                 //console.log(memberstatus);
 
