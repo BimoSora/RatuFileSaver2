@@ -20,6 +20,13 @@ db.connect((err) => {
     else { console.log('db connected'); }
 })
 
+bot.use(async (ctx, next) => {
+    console.time(`Processing update ${ctx.update.update_id}`)
+    await next() // runs next middleware
+    // runs after next middleware finishes
+    console.timeEnd(`Processing update ${ctx.update.update_id}`)
+  })
+
 //ID Channel/Group
 const channelId = `${config.CHANNELJOIN}`;
 
