@@ -5,6 +5,7 @@ const config = require('./config.js')
 const bot = new Telegraf(config.TOKEN, {
    handlerTimeout: 90_000,
 });
+
 config.TZ = "Asia/Jakarta";
 
 //database
