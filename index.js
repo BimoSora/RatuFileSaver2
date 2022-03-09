@@ -1255,7 +1255,7 @@ bot.on(['document', 'video', 'photo'], async(ctx,next) => {
                         })
                     }else{
                         await ctx.replyWithDocument(document.file_id, {
-                            chat_id: ctx.from.id,
+                            chat_id: ctx.chat.id,
                             caption: `${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${document.file_size} B\n<b>File ID:</b> ${document.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${document.file_unique_id} ${mediaId2}`,
                             parse_mode: 'HTML',
                             disable_web_page_preview: true,
@@ -1349,7 +1349,7 @@ bot.on(['document', 'video', 'photo'], async(ctx,next) => {
                         })
                     }else{
                         await ctx.replyWithVideo(video.file_id, {
-                            chat_id: ctx.from.id,
+                            chat_id: ctx.chat.id,
                             caption: `${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${video.file_size} B\n<b>File ID:</b> ${video.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${video.file_unique_id} ${mediaId2}`,
                             parse_mode: 'HTML',
                             disable_web_page_preview: true,
@@ -1443,7 +1443,7 @@ bot.on(['document', 'video', 'photo'], async(ctx,next) => {
                         })
                     }else{
                         await ctx.replyWithPhoto(photo.file_id, {
-                            chat_id: ctx.from.id,
+                            chat_id: ctx.chat.id,
                             caption: `${tag} \n<b>Name file:</b> ${file_name2}\n<b>Size:</b> ${photo.file_size} B\n<b>File ID:</b> ${photo.file_unique_id} ${mediaId} \n\nhttps://t.me/${config.BOTUSERNAME}?start=${photo.file_unique_id} ${mediaId2}`,
                             parse_mode: 'HTML',
                             disable_web_page_preview: true,
