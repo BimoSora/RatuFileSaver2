@@ -6,7 +6,7 @@
   "dependencies": {
     "crypto": "^1.0.1",
     "dotenv": "^8.6.0",
-    "mongodb": "^3.7.3",
+    "mongodb": "^3.6.5",
     "nodemon": "^2.0.15",
     "pm2": "^5.1.2",
     "telegraf": "^4.7.0"
