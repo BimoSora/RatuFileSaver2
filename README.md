@@ -10,7 +10,7 @@ Instalasi yang dibutuhkan
 5. PM2 <code>npm install -g pm2</code></br>
 6. NPM yang dibutuhkan. Jangan lupa pasang di tempat package.json disimpan di folder bot</br>
 <code>npm install dotenv@8.6.0</code></br>
-<code>npm install mongodb@3.6.5</code></br>
+<code>npm install mongodb@3.7.3</code></br>
 <code>npm install nodemon&2.0.15</code></br>
 <code>npm install telegraf@4.7.0</code></br>
 <code>npm install crypto@1.0.1</code></br>
