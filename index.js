@@ -1199,7 +1199,7 @@ bot.on(['document', 'video', 'photo'], async(ctx,next) => {
                     var mediaId = ``;
                     var mediaId2 = ``;
                     if(document.file_name == undefined){
-                        var file_name2 = `${today2(element)}`;
+                        var file_name2 = `${today2(ctx)}`;
                         if(element.message.caption == undefined){
                             var caption2 =  ``;
                         }else{
@@ -1222,7 +1222,7 @@ bot.on(['document', 'video', 'photo'], async(ctx,next) => {
                     var mediaId = `\n<b>Media ID</b>: ${element.message.media_group_id}`;
                     var mediaId2 = `\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${element.message.media_group_id}`;
                     if(document.file_name == undefined){
-                        var file_name2 = `${today2(element)}`;
+                        var file_name2 = `${today2(ctx)}`;
                         if(element.message.caption == undefined){
                             var caption2 =  ``;
                         }else{
@@ -1286,7 +1286,7 @@ bot.on(['document', 'video', 'photo'], async(ctx,next) => {
                     var mediaId = ``;
                     var mediaId2 = ``;
                     if(video.file_name == undefined){
-                        var file_name2 = `${today2(element)}`;
+                        var file_name2 = `${today2(ctx)}`;
                         if(element.message.caption == undefined){
                             var caption2 =  ``;
                         }else{
@@ -1309,7 +1309,7 @@ bot.on(['document', 'video', 'photo'], async(ctx,next) => {
                     var mediaId = `\n<b>Media ID</b>: ${element.message.media_group_id}`;
                     var mediaId2 = `\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${element.message.media_group_id}`;
                     if(video.file_name == undefined){
-                        var file_name2 = `${today2(element)}`;
+                        var file_name2 = `${today2(ctx)}`;
                         if(element.message.caption == undefined){
                             var caption2 =  ``;
                         }else{
@@ -1373,7 +1373,7 @@ bot.on(['document', 'video', 'photo'], async(ctx,next) => {
                     var mediaId = ``;
                     var mediaId2 = ``;
                     if(photo.file_name == undefined){
-                        var file_name2 = `${today2(element)}`;
+                        var file_name2 = `${today2(ctx)}`;
                         if(element.message.caption == undefined){
                             var caption2 =  ``;
                         }else{
@@ -1396,7 +1396,7 @@ bot.on(['document', 'video', 'photo'], async(ctx,next) => {
                     var mediaId = `\n<b>Media ID</b>: ${element.message.media_group_id}`;
                     var mediaId2 = `\nhttps://t.me/${config.BOTUSERNAME}?start=grp_${element.message.media_group_id}`;
                     if(photo.file_name == undefined){
-                        var file_name2 = `${today2(element)}`;
+                        var file_name2 = `${today2(ctx)}`;
                         if(element.message.caption == undefined){
                             var caption2 =  ``;
                         }else{
