@@ -9,7 +9,7 @@
     "mongodb": "^3.7.3",
     "nodemon": "^2.0.15",
     "pm2": "^5.1.2",
-    "telegraf": "^4.7.0"
+    "telegraf": "^4.8.2"
   },
   "scripts": {
     "start": "node index.js",

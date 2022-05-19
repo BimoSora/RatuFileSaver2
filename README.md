@@ -12,7 +12,7 @@ Instalasi yang dibutuhkan
 <code>npm install dotenv@8.6.0</code></br>
 <code>npm install mongodb@3.7.3</code></br>
 <code>npm install nodemon&2.0.15</code></br>
-<code>npm install telegraf@4.7.0</code></br>
+<code>npm install telegraf@4.8.2</code></br>
 <code>npm install crypto@1.0.1</code></br>
 <code>npm install pm2@5.1.2</code></br>
 <hr>
