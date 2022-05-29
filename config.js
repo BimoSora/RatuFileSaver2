@@ -14,7 +14,7 @@ module.exports = {
         //Masukkan nama pengguna bot Anda tanpa @ dan harus huruf kecil
     BOTUSERNAME: '',
 
-        //Masukkan id Admin
+        //Masukkan id Admin, ada admin lain tambah seperti ini 1234 2453"
     ADMIN: '',
 
         //Buat saluran pribadi dan masukkan id saluran untuk memantau file dan mendapatkan data pengguna dan file

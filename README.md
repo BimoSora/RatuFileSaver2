@@ -88,7 +88,7 @@ Pemasangan ada di file config.js</br>
     mongodb+srv://login:password@bot.qnbbq.mongodb.net/database?retryWrites=true&w=majority
 
 <code>LOG_CHANNEL</code> - buat saluran pribadi dan dapatkan ID saluran (jika Anda tidak dapat meneruskan ID saluran apa pun dari saluran ke @getidsbot itu mungkin terlihat seperti -1001234567899).</br>
-<code>ADMIN</code> - ID Akun Anda (jika Anda tidak dapat menemukannya menggunakan bot seperti @getmyid_bot). <b>Jika ada tambahan ADMIN1 dan ADMIN2 tulis sesuai contoh yang ada di config Heroku dan tinggal kasih angka di belakangnya</b></br>
+<code>ADMIN</code> - ID Akun Anda (jika Anda tidak dapat menemukannya menggunakan bot seperti @getmyid_bot). <b>Jika ada tambahan ADMIN1 ADMIN2 dan seterusnya, tulis sesuai contoh yang ada di config Heroku dan tinggal kasih angka di belakangnya</b></br>
 
 <b>LANGKAH 4</b></br>
 Pindahkan beberapa yang ada di folder bot</br>
