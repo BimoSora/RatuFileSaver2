@@ -93,10 +93,6 @@ const inKey = [
     [{text: `${url3}`, url: `${url4}`}]
 ];
 
-const inKey2 = [
-    [{text: `${url3}`, url: `${url4}`}]
-];
-
 //BOT START
 bot.start(async(ctx)=>{
     if(ctx.chat.type == 'private') {
@@ -220,21 +216,49 @@ bot.start(async(ctx)=>{
                             }
                         }else{
                             ctx.deleteMessage()
-                            if(!profile2 || profile2.total_count == 0)
+                            if(msg.indexOf('/start A') > -1 || msg.indexOf('/start grp_') > -1){
+                                if(!profile2 || profile2.total_count == 0)
                                 return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
                                     parse_mode:'HTML',
                                     disable_web_page_preview: true,
                                     reply_markup:{
-                                        inline_keyboard:inKey2
+                                        inline_keyboard:[
+                                            [{text: `${url3}`, url: `${url4}`}],
+                                            [{text: `Try again`, url: `https://t.me/${config.BOTUSERNAME}?start=${query}`}]
+                                        ]
                                     }
                                 })
                                 await ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
                                     parse_mode:'HTML',
                                     disable_web_page_preview: true,
                                     reply_markup:{
-                                        inline_keyboard:inKey2
+                                        inline_keyboard:[
+                                            [{text: `${url3}`, url: `${url4}`}],
+                                            [{text: `Try again`, url: `https://t.me/${config.BOTUSERNAME}?start=${query}`}]
+                                        ]
                                     }
                                 })
+                            }else{
+                                if(!profile2 || profile2.total_count == 0)
+                                return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
+                                    parse_mode:'HTML',
+                                    disable_web_page_preview: true,
+                                    reply_markup:{
+                                        inline_keyboard:[
+                                            [{text: `${url3}`, url: `${url4}`}]
+                                        ]
+                                    }
+                                })
+                                await ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
+                                    parse_mode:'HTML',
+                                    disable_web_page_preview: true,
+                                    reply_markup:{
+                                        inline_keyboard:[
+                                            [{text: `${url3}`, url: `${url4}`}]
+                                        ]
+                                    }
+                                })
+                            }
                         }
                     })
                 }else{
