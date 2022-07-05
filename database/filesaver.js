@@ -58,6 +58,42 @@ module.exports={
         })
     },
 
+    getUser2:()=>{
+        return new Promise(async(resolve,reject)=>{
+            db.get().collection(collection.USER_COLLECTION).find().toArray().then((res1)=>{
+                resolve(res1);
+                
+            })
+        })
+    },
+
+    getGroup2:()=>{
+        return new Promise(async(resolve,reject)=>{
+            db.get().collection(collection.GROUP_COLLECTION).find().toArray().then((res2)=>{
+                resolve(res2);
+                
+            })
+        })
+    },
+
+    getMedia2:()=>{
+        return new Promise(async(resolve,reject)=>{
+            db.get().collection(collection.FILE_COLLECTION).find().toArray().then((res3)=>{
+                resolve(res3);
+                
+            })
+        })
+    },
+
+    getBan2:()=>{
+        return new Promise(async(resolve,reject)=>{
+            db.get().collection(collection.BANNED_COLLECTION).find().toArray().then((res4)=>{
+                resolve(res4);
+                
+            })
+        })
+    },
+
     //updating user database by removing blocked users details from the database
 
 
