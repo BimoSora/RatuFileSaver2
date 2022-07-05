@@ -56,9 +56,6 @@ function username(ctx){
 function fromid(ctx){
     return ctx.from.id ? `[${ctx.from.id}]` : "";
 }
-function captionbuild(ctx){
-    return `${config.CAPTIONLINK}`;
-}
 function welcomejoin(ctx){
     return `${config.WELCOMEJOINBOT}\n\n${today(ctx)}`;
 }
@@ -96,7 +93,7 @@ const inKey = [
 //BOT START
 bot.start(async(ctx)=>{
     if(ctx.chat.type == 'private') {
-        const msg = ctx.message.text
+        const msg = ctx.message.text;
         let msgArray = msg.split(' ')
         //console.log(msgArray.length);
         let length = msgArray.length
@@ -111,9 +108,9 @@ bot.start(async(ctx)=>{
         let str = config.ADMIN;
         let result = str.includes(ctx.from.id);
 
-        if(result == true){
-            //welcoming message on /start and ifthere is a query available we can send files
-            if(length == 1){
+        var payload = ctx.startPayload;
+        if(payload == "welcome"){
+            if(result == true){
                 await ctx.deleteMessage(ctx.message.message_id)
                 const profile = await bot.telegram.getUserProfilePhotos(ctx.from.id)
                 if(!profile || profile.total_count == 0)
@@ -132,76 +129,6 @@ bot.start(async(ctx)=>{
                         }
                     })
             }else{
-                if(query.indexOf('grp_') > -1){
-                    let query1 = query.replace('grp_','');
-                    try{
-                        const res1 = await saver.getFile1(query1)
-                            let mediagroup = [];
-                            for (let index = 0; index < res1.length; index++) {
-                            const data = res1[index];
-                            mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
-                        }
-
-                        async function captionFunction() {
-                            return await ctx.reply(`${captionbuild(ctx)}`,{
-                                parse_mode:'HTML'
-                            })
-                        }
-                        await ctx.deleteMessage(ctx.message.message_id)
-                        await ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup);
-                        setTimeout(captionFunction, 1000)
-                    }catch(error){
-                        await ctx.reply(`Media not found or has been removed.`)
-                    }
-                }else{
-                    let query2 = query;
-                    try{
-                        const res2 = await saver.getFile2(query2)
-        
-                        async function captionFunction2() {
-                            await ctx.reply(`${captionbuild(ctx)}`,{
-                                parse_mode:'HTML'
-                            })
-                        }
-                        if(res2.type=='video'){
-                            await ctx.deleteMessage(ctx.message.message_id)
-                            if(!res2.caption) {
-                                setTimeout(captionFunction2, 1000)
-                                return await ctx.replyWithVideo(res2.file_id);
-                            }
-                            await ctx.replyWithVideo(res2.file_id,{caption: `${res2.caption}`,
-                                parse_mode:'HTML'
-                            });
-                                setTimeout(captionFunction2, 1000)
-                        }else if(res2.type=='photo'){
-                            await ctx.deleteMessage(ctx.message.message_id)
-                            if(!res2.caption) {
-                                setTimeout(captionFunction2, 1000)
-                                return await ctx.replyWithPhoto(res2.file_id);
-                            }
-                            await ctx.replyWithPhoto(res2.file_id,{caption: `${res2.caption}`,
-                                parse_mode:'HTML'
-                            });
-                                setTimeout(captionFunction2, 1000)
-                        }else if(res2.type=='document'){
-                            await ctx.deleteMessage(ctx.message.message_id)
-                            if(!res2.caption) {
-                                setTimeout(captionFunction2, 1000)
-                                return await ctx.replyWithDocument(res2.file_id);
-                            }
-                            await ctx.replyWithDocument(res2.file_id,{caption: `${res2.caption}`,
-                                parse_mode:'HTML'
-                            })
-                                setTimeout(captionFunction2, 1000)
-                        }
-                    }catch(error){
-                        await ctx.deleteMessage(ctx.message.message_id)
-                        await ctx.reply(`Media not found or has been removed.`)
-                    }
-                }
-            }
-        }else{
-            try {
                 var botStatus = await bot.telegram.getChatMember(channelId, ctx.botInfo.id)
                 var member = await bot.telegram.getChatMember(channelId, ctx.from.id)
                 //console.log(member);
@@ -216,202 +143,331 @@ bot.start(async(ctx)=>{
                             }
                         }else{
                             ctx.deleteMessage()
-                            if(msg.indexOf('/start A') > -1 || msg.indexOf('/start grp_') > -1){
-                                if(!profile2 || profile2.total_count == 0)
-                                return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
-                                    parse_mode:'HTML',
-                                    disable_web_page_preview: true,
-                                    reply_markup:{
-                                        inline_keyboard:[
-                                            [{text: `${url3}`, url: `${url4}`}],
-                                            [{text: `Try again`, url: `https://t.me/${config.BOTUSERNAME}?start=${query}`}]
-                                        ]
-                                    }
-                                })
-                                await ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
-                                    parse_mode:'HTML',
-                                    disable_web_page_preview: true,
-                                    reply_markup:{
-                                        inline_keyboard:[
-                                            [{text: `${url3}`, url: `${url4}`}],
-                                            [{text: `Try again`, url: `https://t.me/${config.BOTUSERNAME}?start=${query}`}]
-                                        ]
-                                    }
-                                })
-                            }else{
-                                if(!profile2 || profile2.total_count == 0)
-                                return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
-                                    parse_mode:'HTML',
-                                    disable_web_page_preview: true,
-                                    reply_markup:{
-                                        inline_keyboard:[
-                                            [{text: `${url3}`, url: `${url4}`}]
-                                        ]
-                                    }
-                                })
-                                await ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
-                                    parse_mode:'HTML',
-                                    disable_web_page_preview: true,
-                                    reply_markup:{
-                                        inline_keyboard:[
-                                            [{text: `${url3}`, url: `${url4}`}]
-                                        ]
-                                    }
-                                })
-                            }
+                            if(!profile2 || profile2.total_count == 0)
+                            return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
+                                parse_mode:'HTML',
+                                disable_web_page_preview: true,
+                                reply_markup:{
+                                    inline_keyboard:[
+                                        [{text: `${url3}`, url: `${url4}`}],
+                                        [{text: `Try again`, url: `https://t.me/${config.BOTUSERNAME}?start=${query}`}]
+                                    ]
+                                }
+                            })
+                            await ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
+                                parse_mode:'HTML',
+                                disable_web_page_preview: true,
+                                reply_markup:{
+                                    inline_keyboard:[
+                                        [{text: `${url3}`, url: `${url4}`}],
+                                        [{text: `Try again`, url: `https://t.me/${config.BOTUSERNAME}?start=${query}`}]
+                                    ]
+                                }
+                            })
                         }
                     })
                 }else{
-                    //welcoming message on /start and ifthere is a query available we can send files
-                    if(length == 1){
-                        const profile3 = await bot.telegram.getUserProfilePhotos(ctx.from.id)
-                            await saver.checkBan(`${ctx.from.id}`).then(async res => {
-                                //console.log(res);
-                                if(res == true) {
-                                    if(ctx.chat.type == 'private') {
-                                        await ctx.deleteMessage(ctx.message.message_id)
-                                        await ctx.reply(`${messagebanned(ctx)}`)
-                                    }
-                                }else{
+                    const profile3 = await bot.telegram.getUserProfilePhotos(ctx.from.id)
+                        await saver.checkBan(`${ctx.from.id}`).then(async res => {
+                            //console.log(res);
+                            if(res == true) {
+                                if(ctx.chat.type == 'private') {
                                     await ctx.deleteMessage(ctx.message.message_id)
-                                    if(!profile3 || profile3.total_count == 0)
-                                        return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,{
-                                            parse_mode:'HTML',
-                                            disable_web_page_preview: true,
-                                            reply_markup:{
-                                                inline_keyboard:inKey
-                                            }
-                                        })
-                                        await ctx.replyWithPhoto(profile3.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,
-                                            parse_mode:'HTML',
-                                            disable_web_page_preview: true,
-                                            reply_markup:{
-                                                inline_keyboard:inKey
-                                            }
-                                        })
-                                }
-                            })
-                        }else{
-                            if (query.indexOf('grp_') > -1){
-                                let query1 = query.replace('grp_','');
-                                try{
-                                    const res1 = await saver.getFile1(query1)
-                                        let mediagroup = [];
-                                        for (let index = 0; index < res1.length; index++) {
-                                        const data = res1[index];
-                                        mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
-                                    }
-                    
-                                    async function captionFunction() {
-                                        return await ctx.reply(`${captionbuild(ctx)}`,{
-                                            parse_mode:'HTML'
-                                        })
-                                    }
-                                    await saver.checkBan(`${ctx.from.id}`).then(async res => {
-                                        //console.log(res);
-                                        if(res == true) {
-                                            await ctx.deleteMessage(ctx.message.message_id)
-                                            if(ctx.chat.type == 'private') {
-                                                await ctx.deleteMessage(ctx.message.message_id)
-                                                await ctx.reply(`${messagebanned(ctx)}`)
-                                            }
-                                        }else{
-                                            await ctx.deleteMessage(ctx.message.message_id)
-                                            await ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup);
-                                            setTimeout(captionFunction, 1000)
-                                        }
-                                    })
-                                }catch(error){
-                                    await saver.checkBan(`${ctx.from.id}`).then(async res => {
-                                        //console.log(res);
-                                        if(res == true) {
-                                            if(ctx.chat.type == 'private') {
-                                                await ctx.deleteMessage(ctx.message.message_id)
-                                                await ctx.reply(`${messagebanned(ctx)}`)
-                                            }
-                                        }else{
-                                            await ctx.reply(`Media not found or has been removed.`)
-                                        }
-                                    })
+                                    await ctx.reply(`${messagebanned(ctx)}`)
                                 }
                             }else{
-                                let query2 = query;
-                                try{
-                                    const res2 = await saver.getFile2(query2)
-                    
-                                    async function captionFunction2() {
-                                        await ctx.reply(`${captionbuild(ctx)}`,{
-                                            parse_mode:'HTML'
+                                await ctx.deleteMessage(ctx.message.message_id)
+                                if(!profile3 || profile3.total_count == 0)
+                                    return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,{
+                                        parse_mode:'HTML',
+                                        disable_web_page_preview: true,
+                                        reply_markup:{
+                                            inline_keyboard:inKey
+                                        }
+                                    })
+                                    await ctx.replyWithPhoto(profile3.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,
+                                        parse_mode:'HTML',
+                                        disable_web_page_preview: true,
+                                        reply_markup:{
+                                            inline_keyboard:inKey
+                                        }
+                                    })
+                            }
+                        })
+                }
+            }
+        }else{
+            if(result == true){
+                //welcoming message on /start and ifthere is a query available we can send files
+                if(length == 1){
+                    await ctx.deleteMessage(ctx.message.message_id)
+                    const profile = await bot.telegram.getUserProfilePhotos(ctx.from.id)
+                    if(!profile || profile.total_count == 0)
+                        return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,{
+                            parse_mode:'HTML',
+                            disable_web_page_preview: true,
+                            reply_markup:{
+                                inline_keyboard:inKey
+                            }
+                        })
+                        await ctx.replyWithPhoto(profile.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,
+                            parse_mode:'HTML',
+                            disable_web_page_preview: true,
+                            reply_markup:{
+                                inline_keyboard:inKey
+                            }
+                        })
+                }else{
+                    if(query.indexOf('grp_') > -1){
+                        let query1 = query.replace('grp_','');
+                        try{
+                            const res1 = await saver.getFile1(query1)
+                                let mediagroup = [];
+                                for (let index = 0; index < res1.length; index++) {
+                                const data = res1[index];
+                                mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
+                            }
+
+                            await ctx.deleteMessage(ctx.message.message_id)
+                            await ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup);
+                        }catch(error){
+                            await ctx.reply(`Media not found or has been removed.`)
+                        }
+                    }else{
+                        let query2 = query;
+                        try{
+                            const res2 = await saver.getFile2(query2)
+            
+                            if(res2.type=='video'){
+                                await ctx.deleteMessage(ctx.message.message_id)
+                                if(!res2.caption) {
+                                    return await ctx.replyWithVideo(res2.file_id);
+                                }
+                                await ctx.replyWithVideo(res2.file_id,{caption: `${res2.caption}`,
+                                    parse_mode:'HTML'
+                                });
+                            }else if(res2.type=='photo'){
+                                await ctx.deleteMessage(ctx.message.message_id)
+                                if(!res2.caption) {
+                                    return await ctx.replyWithPhoto(res2.file_id);
+                                }
+                                await ctx.replyWithPhoto(res2.file_id,{caption: `${res2.caption}`,
+                                    parse_mode:'HTML'
+                                });
+                            }else if(res2.type=='document'){
+                                await ctx.deleteMessage(ctx.message.message_id)
+                                if(!res2.caption) {
+                                    return await ctx.replyWithDocument(res2.file_id);
+                                }
+                                await ctx.replyWithDocument(res2.file_id,{caption: `${res2.caption}`,
+                                    parse_mode:'HTML'
+                                })
+                            }
+                        }catch(error){
+                            await ctx.deleteMessage(ctx.message.message_id)
+                            await ctx.reply(`Media not found or has been removed.`)
+                        }
+                    }
+                }
+            }else{
+                try {
+                    var botStatus = await bot.telegram.getChatMember(channelId, ctx.botInfo.id)
+                    var member = await bot.telegram.getChatMember(channelId, ctx.from.id)
+                    //console.log(member);
+                    if(member.status == 'restricted' || member.status == 'left' || member.status == 'kicked'){
+                        const profile2 = await bot.telegram.getUserProfilePhotos(ctx.from.id)
+                        await saver.checkBan(`${ctx.from.id}`).then(async res => {
+                            //console.log(res);
+                            if(res == true) {
+                                if(ctx.chat.type == 'private') {
+                                    await ctx.deleteMessage(ctx.message.message_id)
+                                    await ctx.reply(`${messagebanned(ctx)}`)
+                                }
+                            }else{
+                                ctx.deleteMessage()
+                                if(msg.indexOf('/start A') > -1 || msg.indexOf('/start grp_') > -1){
+                                    if(!profile2 || profile2.total_count == 0)
+                                    return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
+                                        parse_mode:'HTML',
+                                        disable_web_page_preview: true,
+                                        reply_markup:{
+                                            inline_keyboard:[
+                                                [{text: `${url3}`, url: `${url4}`}],
+                                                [{text: `Try again`, url: `https://t.me/${config.BOTUSERNAME}?start=${query}`}]
+                                            ]
+                                        }
+                                    })
+                                    await ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
+                                        parse_mode:'HTML',
+                                        disable_web_page_preview: true,
+                                        reply_markup:{
+                                            inline_keyboard:[
+                                                [{text: `${url3}`, url: `${url4}`}],
+                                                [{text: `Try again`, url: `https://t.me/${config.BOTUSERNAME}?start=${query}`}]
+                                            ]
+                                        }
+                                    })
+                                }else{
+                                    if(!profile2 || profile2.total_count == 0)
+                                    return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,{
+                                        parse_mode:'HTML',
+                                        disable_web_page_preview: true,
+                                        reply_markup:{
+                                            inline_keyboard:[
+                                                [{text: `${url3}`, url: `${url4}`}],
+                                                [{text: `Try again`, url: `https://t.me/${config.BOTUSERNAME}?start=${query}`}]
+                                            ]
+                                        }
+                                    })
+                                    await ctx.replyWithPhoto(profile2.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${welcomejoin(ctx)}`,
+                                        parse_mode:'HTML',
+                                        disable_web_page_preview: true,
+                                        reply_markup:{
+                                            inline_keyboard:[
+                                                [{text: `${url3}`, url: `${url4}`}],
+                                                [{text: `Try again`, url: `https://t.me/${config.BOTUSERNAME}?start=${query}`}]
+                                            ]
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    }else{
+                        //welcoming message on /start and ifthere is a query available we can send files
+                        if(length == 1){
+                            const profile3 = await bot.telegram.getUserProfilePhotos(ctx.from.id)
+                                await saver.checkBan(`${ctx.from.id}`).then(async res => {
+                                    //console.log(res);
+                                    if(res == true) {
+                                        if(ctx.chat.type == 'private') {
+                                            await ctx.deleteMessage(ctx.message.message_id)
+                                            await ctx.reply(`${messagebanned(ctx)}`)
+                                        }
+                                    }else{
+                                        await ctx.deleteMessage(ctx.message.message_id)
+                                        if(!profile3 || profile3.total_count == 0)
+                                            return await ctx.reply(`<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,{
+                                                parse_mode:'HTML',
+                                                disable_web_page_preview: true,
+                                                reply_markup:{
+                                                    inline_keyboard:inKey
+                                                }
+                                            })
+                                            await ctx.replyWithPhoto(profile3.photos[0][0].file_id,{caption: `<a href="tg://user?id=${ctx.from.id}">${first_name(ctx)} ${last_name(ctx)}</a> \n\n${messagewelcome(ctx)}`,
+                                                parse_mode:'HTML',
+                                                disable_web_page_preview: true,
+                                                reply_markup:{
+                                                    inline_keyboard:inKey
+                                                }
+                                            })
+                                    }
+                                })
+                            }else{
+                                if(query.indexOf('grp_') > -1){
+                                    let query1 = query.replace('grp_','');
+                                    try{
+                                        const res1 = await saver.getFile1(query1)
+                                            let mediagroup = [];
+                                            for (let index = 0; index < res1.length; index++) {
+                                            const data = res1[index];
+                                            mediagroup.push({type: data.type, media: data.file_id, caption: data.caption, parse_mode:'HTML'});
+                                        }
+                        
+                                        await saver.checkBan(`${ctx.from.id}`).then(async res => {
+                                            //console.log(res);
+                                            if(res == true) {
+                                                await ctx.deleteMessage(ctx.message.message_id)
+                                                if(ctx.chat.type == 'private') {
+                                                    await ctx.deleteMessage(ctx.message.message_id)
+                                                    await ctx.reply(`${messagebanned(ctx)}`)
+                                                }
+                                            }else{
+                                                await ctx.deleteMessage(ctx.message.message_id)
+                                                await ctx.telegram.sendMediaGroup(ctx.chat.id, mediagroup);
+                                            }
+                                        })
+                                    }catch(error){
+                                        await saver.checkBan(`${ctx.from.id}`).then(async res => {
+                                            //console.log(res);
+                                            if(res == true) {
+                                                if(ctx.chat.type == 'private') {
+                                                    await ctx.deleteMessage(ctx.message.message_id)
+                                                    await ctx.reply(`${messagebanned(ctx)}`)
+                                                }
+                                            }else{
+                                                await ctx.reply(`Media not found or has been removed.`)
+                                            }
                                         })
                                     }
-                                    await saver.checkBan(`${ctx.from.id}`).then(async res => {
-                                        //console.log(res);
-                                        if(res == true) {
-                                            if(ctx.chat.type == 'private') {
-                                                await ctx.deleteMessage(ctx.message.message_id)
-                                                await ctx.reply(`${messagebanned(ctx)}`)
-                                            }
-                                        }else{
-                                            if(res2.type=='video'){
-                                                await ctx.deleteMessage(ctx.message.message_id)
-                                                if(!res2.caption) {
-                                                    setTimeout(captionFunction2, 1000)
-                                                    return ctx.replyWithVideo(res2.file_id);
+                                }else{
+                                    let query2 = query;
+                                    try{
+                                        const res2 = await saver.getFile2(query2)
+                        
+                                        await saver.checkBan(`${ctx.from.id}`).then(async res => {
+                                            //console.log(res);
+                                            if(res == true) {
+                                                if(ctx.chat.type == 'private') {
+                                                    await ctx.deleteMessage(ctx.message.message_id)
+                                                    await ctx.reply(`${messagebanned(ctx)}`)
                                                 }
-                                                await ctx.replyWithVideo(res2.file_id,{caption: `${res2.caption}`,
-                                                    parse_mode:'HTML'
-                                                });
-                                                    setTimeout(captionFunction2, 1000)
-                                            }else if(res2.type=='photo'){
-                                                await ctx.deleteMessage(ctx.message.message_id)
-                                                if(!res2.caption) {
-                                                    setTimeout(captionFunction2, 1000)
-                                                    return await ctx.replyWithPhoto(res2.file_id);
+                                            }else{
+                                                if(res2.type=='video'){
+                                                    await ctx.deleteMessage(ctx.message.message_id)
+                                                    if(!res2.caption) {
+                                                        return ctx.replyWithVideo(res2.file_id);
+                                                    }
+                                                    await ctx.replyWithVideo(res2.file_id,{caption: `${res2.caption}`,
+                                                        parse_mode:'HTML'
+                                                    });
+                                                }else if(res2.type=='photo'){
+                                                    await ctx.deleteMessage(ctx.message.message_id)
+                                                    if(!res2.caption) {
+                                                        return await ctx.replyWithPhoto(res2.file_id);
+                                                    }
+                                                    await ctx.replyWithPhoto(res2.file_id,{caption: `${res2.caption}`,
+                                                        parse_mode:'HTML'
+                                                    });
+                                                }else if(res2.type=='document'){
+                                                    await ctx.deleteMessage(ctx.message.message_id)
+                                                    if(!res2.caption) {
+                                                        return await ctx.replyWithDocument(res2.file_id);
+                                                    }
+                                                    await ctx.replyWithDocument(res2.file_id,{caption: `${res2.caption}`,
+                                                        parse_mode:'HTML'
+                                                    })
                                                 }
-                                                await ctx.replyWithPhoto(res2.file_id,{caption: `${res2.caption}`,
-                                                    parse_mode:'HTML'
-                                                });
-                                                    setTimeout(captionFunction2, 1000)
-                                            }else if(res2.type=='document'){
-                                                await ctx.deleteMessage(ctx.message.message_id)
-                                                if(!res2.caption) {
-                                                    setTimeout(captionFunction2, 1000)
-                                                    return await ctx.replyWithDocument(res2.file_id);
+                                            }
+                                        })
+                                    }catch(error){
+                                        await saver.checkBan(`${ctx.from.id}`).then(async res => {
+                                            //console.log(res);
+                                            if(res == true) {
+                                                if(ctx.chat.type == 'private') {
+                                                    await ctx.deleteMessage(ctx.message.message_id)
+                                                    await ctx.reply(`${messagebanned(ctx)}`)
                                                 }
-                                                await ctx.replyWithDocument(res2.file_id,{caption: `${res2.caption}`,
-                                                    parse_mode:'HTML'
-                                                })
-                                                    setTimeout(captionFunction2, 1000)
-                                            }
-                                        }
-                                    })
-                                }catch(error){
-                                    await saver.checkBan(`${ctx.from.id}`).then(async res => {
-                                        //console.log(res);
-                                        if(res == true) {
-                                            if(ctx.chat.type == 'private') {
+                                            }else{
                                                 await ctx.deleteMessage(ctx.message.message_id)
-                                                await ctx.reply(`${messagebanned(ctx)}`)
+                                                await ctx.reply(`Media not found or has been removed.`)
                                             }
-                                        }else{
-                                            await ctx.deleteMessage(ctx.message.message_id)
-                                            await ctx.reply(`Media not found or has been removed.`)
-                                        }
-                                    })
+                                        })
+                                    }
                                 }
                             }
                         }
                     }
+                catch(error){
+                    await ctx.deleteMessage(ctx.message.message_id)
+                    await ctx.reply(`${messagebotnoaddgroup(ctx)}`)
                 }
-            catch(error){
-                await ctx.deleteMessage(ctx.message.message_id)
-                await ctx.reply(`${messagebotnoaddgroup(ctx)}`)
             }
         }
         //saving user details to the database
         await saver.saveUser(user)
     }
 })
+
 
 //DEFINING POP CALLBACK
 bot.action('POP', async(ctx)=>{

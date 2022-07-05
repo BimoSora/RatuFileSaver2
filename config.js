@@ -20,9 +20,6 @@ module.exports = {
         //Buat saluran pribadi dan masukkan id saluran untuk memantau file dan mendapatkan data pengguna dan file
     LOG_CHANNEL: '',
 
-        //Caption ketika link media yang dikirim di tekan
-    CAPTIONLINK: '',
-
         //Masukkan pesan sebelum pengguna bergabung
     WELCOMEJOINBOT: '',
 
